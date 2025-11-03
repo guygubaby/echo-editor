@@ -130,6 +130,7 @@ import {
   Clear,
   Blockquote,
   Link,
+  Comment,
   Color,
   Video,
   OrderedList,
@@ -190,6 +191,7 @@ const minimalExtensions = [
   Blockquote.configure({ spacer: true }),
   Code,
   Link,
+  Comment,
   Color,
   TaskList.configure({ spacer: true }),
   OrderedList,
@@ -230,6 +232,11 @@ const fullExtensions = [
     },
   }),
   Link,
+  Comment.configure({
+    onCommentActivated: (commentId) => {
+      console.log('Comment activated:', commentId)
+    },
+  }),
   Image,
   ImageUpload.configure({
     upload: (files: File) => {

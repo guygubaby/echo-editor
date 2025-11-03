@@ -49,6 +49,9 @@ export type { BlockquoteOptions } from './Blockquote'
 export { Link } from './Link'
 export type { LinkOptions } from './Link'
 
+export { Comment } from './Comment'
+export type { CommentOptions } from './Comment'
+
 export { HorizontalRule } from './HorizontalRule'
 export type { HorizontalRuleOptions } from './HorizontalRule'
 

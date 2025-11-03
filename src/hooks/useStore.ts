@@ -40,6 +40,9 @@ interface Instance {
   /** AI Menu visibility */
   AIMenu: boolean
 
+  /** Comment Menu visibility */
+  CommentMenu: boolean
+
   /** Preview visibility */
   showPreview: boolean
 
@@ -70,6 +73,7 @@ export const useTiptapStore = createGlobalState(() => {
     color: undefined,
     highlight: undefined,
     AIMenu: false,
+    CommentMenu: false,
     sourceCode: false,
     showPreview: false,
     specialCharacter: false,

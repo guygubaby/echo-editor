@@ -17,6 +17,7 @@ import ContentMenu from './menus/ContentMenu.vue'
 import ColumnsBubbleMenu from './menus/ColumnsBubbleMenu.vue'
 import ImageBubbleMenu from './menus/ImageBubbleMenu.vue'
 import AIMenu from './menus/AIMenu.vue'
+import CommentMenu from './menus/CommentMenu.vue'
 import Menubars from './Menubars.vue'
 import Toolbar from './Toolbar.vue'
 import Preview from './Preview.vue'
@@ -230,6 +231,7 @@ defineExpose({ editor })
           <ColumnsBubbleMenu v-if="hasExtension(editor, 'columns')" :editor="editor" />
           <TableBubbleMenu v-if="hasExtension(editor, 'table')" :editor="editor" />
           <AIMenu v-if="hasExtension(editor, 'AI')" :editor="editor" />
+          <CommentMenu v-if="hasExtension(editor, 'comment')" :editor="editor" />
           <ImageBubbleMenu v-if="hasExtension(editor, 'image')" :editor="editor" />
           <BasicBubbleMenu :editor="editor" />
         </template>

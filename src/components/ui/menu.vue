@@ -15,6 +15,7 @@
       @mouseenter="handleMouseEnter(index)"
       @click="handleClick(item)"
     >
+      <Icon v-if="item.icon" :name="item.icon as any" class="mr-2 h-4 w-4" />
       <span>{{ item.label }}</span>
       <Icon v-if="item.children && item.isSelected" name="ChevronRight" class="ml-auto h-4 w-4" />
       <div
@@ -33,6 +34,7 @@
             @mouseenter="handleSubItemMouseEnter(index, subIndex)"
             @click="handleClick(subItem)"
           >
+            <Icon v-if="subItem.icon" :name="subItem.icon as any" class="mr-2 h-4 w-4" />
             <span>{{ subItem.label }}</span>
           </div>
         </div>
@@ -48,6 +50,7 @@ import { reactive, onMounted, watch, ref, nextTick } from 'vue'
 // 扩展 MenuItem 接口
 interface MenuItem {
   label: string
+  icon?: string
   isHovered?: boolean
   isSelected?: boolean
   children?: MenuItem[]

@@ -147,6 +147,8 @@ export const NODE_TYPE_MENU: any = {
     'color',
     'highlight',
     'textAlign',
+    'divider',
+    'comment',
   ],
   video: ['video-size-small', 'video-size-medium', 'video-size-large', 'divider', 'remove'],
 }

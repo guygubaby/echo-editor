@@ -32,6 +32,7 @@ import {
   Minimize,
   Table,
   Sparkles,
+  MessageSquare,
   Pencil,
   Unlink,
   BetweenHorizontalEnd,
@@ -134,6 +135,7 @@ export const icons = {
   Minimize,
   Table,
   Sparkles,
+  MessageSquare,
   Magic: Wand2,
   Pencil,
   Unlink,
@@ -208,6 +210,14 @@ export const icons = {
   Omega,
   CodeXml,
   Iframe: AppWindow,
+  Comment: ExtraIcons.Comment,
+  AIImprove: ExtraIcons.AIImprove,
+  AILonger: ExtraIcons.AILonger,
+  AIShorter: ExtraIcons.AIShorter,
+  AISummarize: ExtraIcons.AISummarize,
+  AITranslate: ExtraIcons.AITranslate,
+  AIFlowchart: ExtraIcons.AIFlowchart,
+  AITable: ExtraIcons.AITable,
 } as const
 
 export default icons
