@@ -63,10 +63,18 @@ const getReferenceClientRect: GetReferenceClientRect = () => {
   } = props.editor
 
   // 获取当前选中的表格节点
-  const node = view.domAtPos(from).node as HTMLElement
+  let node = view.domAtPos(from).node as HTMLElement
+  
+  // 修复：如果是文本节点（没有 tagName 属性），获取其父元素
+  // 文本节点没有 closest() 方法，需要使用父元素
+  if (!node || !(node as any).tagName) {
+    node = (node as any)?.parentElement
+  }
+  
   if (!node) return new DOMRect(-1000, -1000, 0, 0)
+  
   // 获取表格元素
-  const tableWrapper = node?.closest('.tableWrapper')
+  const tableWrapper = node.closest('.tableWrapper')
   if (!tableWrapper) return new DOMRect(-1000, -1000, 0, 0)
 
   // 获取表格的位置信息
