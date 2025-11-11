@@ -1,6 +1,6 @@
 {
   "name": "@leeat/echo-editor",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "private": false,
   "license": "MIT",
   "description": "A modern AI-powered WYSIWYG and Highly Customized RichTextEditor for Vue, based on Tiptap and shadcn-vue",
