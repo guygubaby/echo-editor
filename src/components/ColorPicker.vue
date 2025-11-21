@@ -3,13 +3,13 @@ import { ref, computed } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
 import { COLORS_LIST, DEFAULT_COLOR } from '@/constants'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-
 import { useLocale } from '@/locales'
 
 interface Props {
   modelValue?: string
   highlight?: boolean
   disabled?: boolean
+  presetColors?: string[]
 }
 
 const { t } = useLocale()
@@ -17,17 +17,37 @@ interface Emits {
   (event: 'update:modelValue', color: string | undefined): void
   (event: 'change', color: string | undefined): void
 }
-const chunkedColors = COLORS_LIST.reduce((acc, color, index) => {
-  const chunkIndex = Math.floor(index / 10)
-  if (!acc[chunkIndex]) acc[chunkIndex] = []
-  acc[chunkIndex].push(color)
-  return acc
-}, [] as string[][])
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
   highlight: false,
   disabled: false,
+  presetColors: () => [],
+})
+
+// Combine presetColors with COLORS_LIST, removing duplicates (presetColors first)
+const allColors = computed(() => {
+  const preset = props.presetColors || []
+  const combined = [...preset, ...COLORS_LIST]
+  // Remove duplicates by converting to Set and back to array, preserving order
+  const seen = new Set<string>()
+  const result: string[] = []
+  for (const color of combined) {
+    if (!seen.has(color)) {
+      seen.add(color)
+      result.push(color)
+    }
+  }
+  return result
+})
+
+const chunkedColors = computed(() => {
+  return allColors.value.reduce((acc, color, index) => {
+    const chunkIndex = Math.floor(index / 10)
+    if (!acc[chunkIndex]) acc[chunkIndex] = []
+    acc[chunkIndex].push(color)
+    return acc
+  }, [] as string[][])
 })
 const html5Color = ref<HTMLInputElement | null>(null)
 

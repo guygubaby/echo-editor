@@ -14,6 +14,7 @@ interface Props {
   disabled?: boolean
   action?: ButtonViewReturnComponentProps['action']
   isActive?: ButtonViewReturnComponentProps['isActive']
+  presetColors?: string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -22,6 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   action: undefined,
   isActive: undefined,
+  presetColors: undefined,
 })
 
 const selectedColor = ref<string | undefined>(undefined)
@@ -67,7 +69,7 @@ function toggleColor(e: any) {
         </span>
       </template>
     </ActionButton>
-    <color-picker v-model="selectedColor" @change="onChange" :disabled="disabled">
+    <color-picker v-model="selectedColor" @change="onChange" :disabled="disabled" :preset-colors="presetColors">
       <Button
         variant="ghost"
         size="icon"

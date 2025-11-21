@@ -220,7 +220,7 @@ const fullExtensions = [
   Underline,
   Strike,
   MoreMark,
-  Color.configure({ spacer: true }),
+  Color.configure({ spacer: true, presetColors: ['#DF2A3F'] }),
   Highlight,
   BulletList,
   OrderedList,
@@ -235,7 +235,7 @@ const fullExtensions = [
   }),
   Link,
   Comment.configure({
-    onCommentActivated: (commentId) => {
+    onCommentActivated: commentId => {
       console.log('Comment activated:', commentId)
     },
   }),

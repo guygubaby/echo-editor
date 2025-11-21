@@ -16,6 +16,7 @@ interface Props {
   action?: ButtonViewReturnComponentProps['action']
   isActive?: ButtonViewReturnComponentProps['isActive']
   tooltipOptions?: TooltipContentProps
+  presetColors?: string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -24,6 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
   action: undefined,
   tooltipOptions: undefined,
   isActive: undefined,
+  presetColors: undefined,
 })
 
 const selectedColor = ref<string | undefined>(undefined)
@@ -79,7 +81,7 @@ watchEffect(() => {
         ></span>
       </template>
     </ActionButton>
-    <color-picker v-model="selectedColor" @change="onChange" highlight :disabled="disabled">
+    <color-picker v-model="selectedColor" @change="onChange" highlight :disabled="disabled" :preset-colors="presetColors">
       <Button
         variant="ghost"
         size="icon"
