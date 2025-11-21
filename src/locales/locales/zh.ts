@@ -52,6 +52,8 @@ const locale: Record<string, string> = {
   'editor.fontFamily.default': '默认字体',
   'editor.fontSize.tooltip': '字号调整',
   'editor.fontSize.default.tooltip': '默认字号',
+  'editor.fontWeight.tooltip': '字重',
+  'editor.fontWeight.default.tooltip': '默认',
   'editor.superscript.tooltip': '上标',
   'editor.subscript.tooltip': '下标',
   'editor.bulletlist.tooltip': '无序列表',

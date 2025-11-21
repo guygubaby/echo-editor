@@ -108,6 +108,10 @@ export { FontFamily } from './FontFamily'
 
 export type { FontFamilyOptions } from './FontFamily'
 
+export { FontWeight } from './FontWeight'
+
+export type { FontWeightOptions } from './FontWeight'
+
 export type { PreviewOptions } from './Preview'
 export { Preview } from './Preview'
 

@@ -55,6 +55,8 @@ const locale: Record<string, string> = {
   'editor.fontFamily.default': 'Default',
   'editor.fontSize.tooltip': 'Font size',
   'editor.fontSize.default.tooltip': 'Default',
+  'editor.fontWeight.tooltip': 'Font weight',
+  'editor.fontWeight.default.tooltip': 'Default',
   'editor.superscript.tooltip': 'Superscript',
   'editor.subscript.tooltip': 'Subscript',
   'editor.bulletlist.tooltip': 'Bullet List',

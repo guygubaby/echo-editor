@@ -1,4 +1,4 @@
-# Echo Editor
+# Echo Editor - Forked from Seedsa/echo-editor
 
 一款基于 [tiptap](https://tiptap.dev) 和 [shadcn-vue](https://www.shadcn-vue.com/) 的新一代 AI 富文本编辑器。
 

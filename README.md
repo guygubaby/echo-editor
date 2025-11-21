@@ -1,6 +1,6 @@
-# Echo Editor
+# Echo Editor - Forked from Seedsa/echo-editor
 
-A modern AI-powered WYSIWYG rich-text editor for Vue, based on [tiptap](https://tiptap.dev) and [shadcn-vue](https://www.shadcn-vue.com/).
+A fork of Seedsa/echo-editor (some reason the origin repository not maintenance anymore, so i made this fork to fix some issues or add some features). A modern AI-powered WYSIWYG rich-text editor for Vue, based on [tiptap](https://tiptap.dev) and [shadcn-vue](https://www.shadcn-vue.com/).
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![](https://img.shields.io/npm/v/echo-editor.svg?label=version)](https://www.npmjs.com/package/echo-editor)
