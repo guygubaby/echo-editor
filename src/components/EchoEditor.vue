@@ -16,6 +16,7 @@ import TableBubbleMenu from './menus/TableBubbleMenu.vue'
 import ContentMenu from './menus/ContentMenu.vue'
 import ColumnsBubbleMenu from './menus/ColumnsBubbleMenu.vue'
 import ImageBubbleMenu from './menus/ImageBubbleMenu.vue'
+import VideoBubbleMenu from './menus/VideoBubbleMenu.vue'
 import AIMenu from './menus/AIMenu.vue'
 import CommentMenu from './menus/CommentMenu.vue'
 import Menubars from './Menubars.vue'
@@ -244,6 +245,7 @@ defineExpose({ editor })
           <AIMenu v-if="hasExtension(editor, 'AI')" :editor="editor" />
           <CommentMenu v-if="hasExtension(editor, 'comment')" :editor="editor" />
           <ImageBubbleMenu v-if="hasExtension(editor, 'image')" :editor="editor" />
+          <VideoBubbleMenu v-if="hasExtension(editor, 'video')" :editor="editor" />
           <BasicBubbleMenu :editor="editor" />
         </template>
       </div>

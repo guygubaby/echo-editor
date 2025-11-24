@@ -27,13 +27,14 @@ const imagePercent = ref('100')
 const width = ref()
 const height = ref()
 const aspectRatio = ref()
+const borderRadius = ref('')
 const imageAlign: ImageAlignments[] = ['left', 'center', 'right']
 const alignIconMap: any = {
   left: 'AlignLeft',
   center: 'AlignCenter',
   right: 'AlignRight',
 }
-
+const borderRadiusOpen = ref(false)
 function updateImageSize(event?: Event) {
   event?.preventDefault()
   const imageAttrs = props.editor.getAttributes('image')
@@ -79,8 +80,10 @@ watch(
       width.value = Math.round(parseFloat(image.originWidth))
       height.value = Math.round(parseFloat(image.originHeight))
       aspectRatio.value = image.originWidth / image.originHeight
+      borderRadius.value = image.borderRadius || ''
     }
-  }
+  },
+  { immediate: true }
 )
 function updateWidthFromHeight() {
   if (height.value && aspectRatio.value) {
@@ -120,6 +123,19 @@ function handleFlipY() {
       flipY: !flipY,
     })
     .run()
+}
+
+function handleBorderRadiusChange() {
+  props.editor
+    .chain()
+    .focus(undefined, { scrollIntoView: false })
+    .updateImage({
+      borderRadius: borderRadius.value || null,
+    })
+    .run()
+
+  // close the popover
+  borderRadiusOpen.value = false
 }
 
 function handleRemove() {
@@ -189,6 +205,26 @@ function handleRemove() {
                   </TabsTrigger>
                 </TabsList>
               </Tabs>
+            </div>
+          </PopoverContent>
+        </Popover>
+        <Separator orientation="vertical" class="mx-1 me-2 h-[16px]" />
+        <Popover v-model:open="borderRadiusOpen">
+          <PopoverTrigger>
+            <ActionButton :tooltip="t('editor.image.menu.borderRadius')" :title="t('editor.image.menu.borderRadius')" />
+          </PopoverTrigger>
+          <PopoverContent class="w-84">
+            <div class="flex items-center gap-2">
+              <Label for="borderRadius" class="whitespace-nowrap">{{ t('editor.image.menu.borderRadius') }}</Label>
+              <Input
+                id="borderRadius"
+                v-model="borderRadius"
+                type="text"
+                placeholder="0px, 4px, 50%, etc."
+                @keyup.enter="handleBorderRadiusChange"
+                class="flex-1 h-8"
+              />
+              <ActionButton type="primary" @click="handleBorderRadiusChange">Set</ActionButton>
             </div>
           </PopoverContent>
         </Popover>

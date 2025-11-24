@@ -24,7 +24,6 @@ import { TrailingNode } from './TrailingNode/TrailingNode'
 import { Selection } from './Selection/Selection'
 import { HighlightParagraph } from './HighlightParagraph'
 import type { TrailingNodeOptions } from './TrailingNode/TrailingNode'
-
 import type { BubbleOptions } from '../components/menus/BasicBubble'
 import { defaultBubbleList, generateBubbleTypeMenu } from '../components/menus/BasicBubble'
 
@@ -119,7 +118,6 @@ export interface BaseKitOptions {
    */
   bubble: Partial<BubbleOptions<BaseKitOptions>>
 
-
   /**
    * Trailing node options or false, indicating whether to enable the trailing node
    *
@@ -178,7 +176,12 @@ export const BaseKit = Extension.create<BaseKitOptions>({
             if (nodeTypeName === 'heading') {
               return `${t.value(`editor.heading.h${node.attrs.level}.tooltip`)}`
             }
-            if (nodeTypeName === 'table' || nodeTypeName === 'codeBlock' || nodeTypeName === 'bulletList' || nodeTypeName === 'orderedList') {
+            if (
+              nodeTypeName === 'table' ||
+              nodeTypeName === 'codeBlock' ||
+              nodeTypeName === 'bulletList' ||
+              nodeTypeName === 'orderedList'
+            ) {
               return ''
             }
             const hasSlashExtension = editor.extensionManager.extensions.some(
@@ -256,7 +259,6 @@ export const BaseKit = Extension.create<BaseKitOptions>({
     }
     if (this.options.highlightParagraph !== false) {
       extensions.push(HighlightParagraph)
-
     }
 
     return extensions

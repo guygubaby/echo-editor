@@ -8,23 +8,55 @@ import { getCssUnitWithDefault } from '@/utils/utils'
  */
 export interface VideoOptions {
   /**
-   * Indicates whether fullscreen play is allowed
+   * Poster image URL for the video
    *
-   * @default true
+   * @default null
    */
-  allowFullscreen: boolean
-  /**
-   * Indicates whether to display the frameborder
-   *
-   * @default false
-   */
-  frameborder: boolean
+  poster: string | null
+
+  onSelectPoster?: () => Promise<string | null | undefined> | string | null | undefined
   /**
    * Width of the video, can be a number or string
    *
    * @default VIDEO_SIZE['size-medium']
    */
   width: number | string
+  /**
+   * Object fit CSS property for the video
+   *
+   * @default 'contain'
+   */
+  objectFit: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down'
+  /**
+   * Whether to show video controls
+   *
+   * @default true
+   */
+  showControls: boolean
+  /**
+   * Whether the video should autoplay
+   *
+   * @default false
+   */
+  autoplay: boolean
+  /**
+   * Whether the video should loop
+   *
+   * @default false
+   */
+  loop: boolean
+  /**
+   * Whether the video should be muted
+   *
+   * @default false
+   */
+  muted: boolean
+  /**
+   * Whether the video should play inline on mobile
+   *
+   * @default false
+   */
+  playsInline: boolean
   /** HTML attributes object for passing additional attributes */
   HTMLAttributes: {
     [key: string]: any
@@ -38,8 +70,22 @@ export interface VideoOptions {
 type SetVideoOptions = {
   /** The source URL of the video */
   src: string
+  /** The poster image URL for the video */
+  poster?: string | null
   /** The width of the video */
-  width: string | number
+  width?: string | number
+  /** Object fit CSS property */
+  objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down'
+  /** Whether to show video controls */
+  showControls?: boolean
+  /** Whether the video should autoplay */
+  autoplay?: boolean
+  /** Whether the video should loop */
+  loop?: boolean
+  /** Whether the video should be muted */
+  muted?: boolean
+  /** Whether the video should play inline on mobile */
+  playsInline?: boolean
 }
 
 declare module '@tiptap/core' {
@@ -57,29 +103,6 @@ declare module '@tiptap/core' {
   }
 }
 
-function linkConvert(src: string) {
-  // Convert youtube links
-  src = src.replace('https://youtu.be/', 'https://www.youtube.com/watch?v=').replace('watch?v=', 'embed/')
-
-  // Convert vimeo links
-  src = src.replace('https://vimeo.com/', 'https://player.vimeo.com/video/')
-
-  // Convert bilibili links
-  const isBilibiliLink = /^https?:\/\/www.bilibili.com\/video\/.*/i.test(src)
-  if (isBilibiliLink) {
-    src = src
-      .replace(/\?.*$/i, '')
-      .replace('https://www.bilibili.com/video/', 'https://player.bilibili.com/player.html?bvid=')
-  }
-
-  // Convert google drive links
-  if (src.includes('drive.google.com')) {
-    src = src.replace('/view', '/preview')
-  }
-
-  return src
-}
-
 export const Video = Node.create<VideoOptions>({
   name: 'video',
   group: 'block',
@@ -90,7 +113,13 @@ export const Video = Node.create<VideoOptions>({
       src: {
         default: null,
         renderHTML: ({ src }) => ({
-          src: src ? linkConvert(src) : null,
+          src: src || null,
+        }),
+      },
+      poster: {
+        default: null,
+        renderHTML: ({ poster }) => ({
+          poster: poster || null,
         }),
       },
       width: {
@@ -99,13 +128,31 @@ export const Video = Node.create<VideoOptions>({
           width: getCssUnitWithDefault(width),
         }),
       },
-      frameborder: {
-        default: this.options.frameborder ? 1 : 0,
-        parseHTML: () => (this.options.frameborder ? 1 : 0),
+      objectFit: {
+        default: this.options.objectFit,
+        renderHTML: ({ objectFit }) => {
+          return objectFit ? { style: `object-fit: ${objectFit};` } : {}
+        },
       },
-      allowfullscreen: {
-        default: this.options.allowFullscreen,
-        parseHTML: () => this.options.allowFullscreen,
+      controls: {
+        default: this.options.showControls,
+        renderHTML: ({ controls }) => (controls ? { controls: '' } : {}),
+      },
+      autoplay: {
+        default: this.options.autoplay,
+        renderHTML: ({ autoplay }) => (autoplay ? { autoplay: '' } : {}),
+      },
+      loop: {
+        default: this.options.loop,
+        renderHTML: ({ loop }) => (loop ? { loop: '' } : {}),
+      },
+      muted: {
+        default: this.options.muted,
+        renderHTML: ({ muted }) => (muted ? { muted: '' } : {}),
+      },
+      playsInline: {
+        default: this.options.playsInline,
+        renderHTML: ({ playsInline }) => (playsInline ? { playsinline: '' } : {}),
       },
     }
   },
@@ -113,33 +160,21 @@ export const Video = Node.create<VideoOptions>({
   parseHTML() {
     return [
       {
-        tag: 'div[data-video] iframe',
+        tag: 'div[data-video] video',
+      },
+      {
+        tag: 'video',
       },
     ]
   },
 
   renderHTML({ HTMLAttributes }) {
-    const { width = '100%' } = HTMLAttributes ?? {}
-
-    const iframeHTMLAttributes = {
-      ...HTMLAttributes,
-      width: '100%',
-      height: '100%',
-    }
-
-    const responsiveStyle = `position: relative;overflow: hidden;display: flex;flex: 1;max-width: ${width};`
-    const responsiveSizesStyle = `flex: 1;padding-bottom: ${(9 / 16) * 100}%;`
-
-    const iframeDOM = ['iframe', iframeHTMLAttributes]
-    const sizesDOM = ['div', { style: responsiveSizesStyle }]
-    const responsiveDOM = ['div', { style: responsiveStyle }, sizesDOM, iframeDOM]
-
     const divAttrs = {
       ...this.options.HTMLAttributes,
       'data-video': '',
     }
 
-    return ['div', divAttrs, responsiveDOM]
+    return ['div', divAttrs, ['video', HTMLAttributes]]
   },
 
   addCommands() {
@@ -164,12 +199,17 @@ export const Video = Node.create<VideoOptions>({
     return {
       divider: false,
       spacer: false,
-      allowFullscreen: true,
       upload: undefined,
-      frameborder: false,
+      poster: null,
       width: VIDEO_SIZE['size-medium'],
+      objectFit: 'contain',
+      showControls: true,
+      autoplay: false,
+      loop: false,
+      muted: false,
+      playsInline: false,
       HTMLAttributes: {
-        class: 'iframe-wrapper',
+        class: 'video-wrapper',
         style: 'display: flex;justify-content: center;',
       },
     }

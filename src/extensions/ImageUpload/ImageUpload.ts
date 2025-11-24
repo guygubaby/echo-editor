@@ -5,11 +5,13 @@ import { Plugin } from '@tiptap/pm/state'
 import ActionButton from '@/components/ActionButton.vue'
 import { UploadImagesPlugin, createImageUpload, handleImagePaste, handleImageDrop } from '@/plugins/image-upload'
 import { useToast } from '@/components/ui/toast/use-toast'
+import { SetImageAttrsOptions } from '../Image/Image'
 
 export interface ImageUploadOptions {
   upload: (file: File) => Promise<string>
   acceptMimes: string[]
   maxSize: number
+  customizedSelectFileFn?: () => Promise<SetImageAttrsOptions | undefined> | SetImageAttrsOptions | undefined
 }
 
 declare module '@tiptap/core' {
@@ -57,8 +59,8 @@ export const ImageUpload = Node.create<ImageUploadOptions>({
     return {
       setImageUpload:
         () =>
-          ({ commands }) =>
-            commands.insertContent(`<div data-type="${this.name}"></div>`),
+        ({ commands }) =>
+          commands.insertContent(`<div data-type="${this.name}"></div>`),
     }
   },
 

@@ -3,6 +3,7 @@ import type { Editor } from '@tiptap/vue-3'
 import ActionButton from '../ActionButton.vue'
 import { VIDEO_SIZE } from '@/constants'
 import type { ButtonViewParams, ButtonViewReturn, ExtensionNameKeys } from '@/type'
+
 /** Represents the size types for bubble images or videos */
 type BubbleImageOrVideoSizeType = 'size-small' | 'size-medium' | 'size-large'
 
@@ -10,10 +11,10 @@ type BubbleImageOrVideoSizeType = 'size-small' | 'size-medium' | 'size-large'
 type BubbleImageType = `video-${BubbleImageOrVideoSizeType}` | 'image' | 'image-aspect-ratio' | 'remove'
 
 /** Represents the types for bubble videos */
-type BubbleVideoType = 'video' | 'remove'
+type BubbleVideoType = 'video' | 'remove' | 'object-fit'
 
 /** Represents the overall types for bubbles */
-type BubbleAllType = BubbleImageType | BubbleVideoType | ExtensionNameKeys | 'divider' | (string & {})
+type BubbleAllType = BubbleImageType | BubbleVideoType | ExtensionNameKeys | 'divider' | 'object-fit' | (string & {})
 
 /** Represents the key types for node types */
 export type NodeTypeKey = 'image' | 'text' | 'video'
@@ -74,20 +75,21 @@ const videoSizeMenus = (editor: Editor): BubbleMenuItem[] => {
     },
   }))
 }
+
 export const defaultBubbleList = (editor: Editor): BubbleMenuItem[] => [
-  ...videoSizeMenus(editor),
-  {
-    type: 'remove',
-    component: ActionButton,
-    componentProps: {
-      tooltip: 'editor.remove',
-      icon: 'Trash2',
-      action: () => {
-        const { state, dispatch } = editor.view
-        deleteSelection(state, dispatch)
-      },
-    },
-  },
+  // ...videoSizeMenus(editor),
+  // {
+  //   type: 'remove',
+  //   component: ActionButton,
+  //   componentProps: {
+  //     tooltip: 'editor.remove',
+  //     icon: 'Trash2',
+  //     action: () => {
+  //       const { state, dispatch } = editor.view
+  //       deleteSelection(state, dispatch)
+  //     },
+  //   },
+  // },
 ]
 
 /**
@@ -158,10 +160,10 @@ export const generateBubbleTypeMenu = <T = any>(
     }
 
     const lastItem = _items[_items.length - 1]
-    const fristItem = _items[0]
+    const firstItem = _items[0]
 
     if (lastItem?.type === 'divider') _items.pop()
-    if (fristItem?.type === 'divider') _items.shift()
+    if (firstItem?.type === 'divider') _items.shift()
 
     items[node as NodeTypeKey] = _items
   }

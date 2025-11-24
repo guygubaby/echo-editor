@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
-
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
@@ -45,7 +44,25 @@ function handleLink() {
 function handleDelete() {
   props.deleteNode()
 }
-function handleClick() {
+async function handleClick() {
+  const uploadOptions = props.editor.extensionManager.extensions.find(
+    extension => extension.name === 'imageUpload'
+  )?.options
+
+  // If customizedSelectFileFn is provided, use it directly instead of file input
+  if (uploadOptions?.customizedSelectFileFn) {
+    try {
+      const result = await Promise.resolve(uploadOptions.customizedSelectFileFn())
+      if (result) {
+        props.editor.chain().setImage(result).deleteRange({ from: props.getPos(), to: props.getPos() }).focus().run()
+      }
+    } catch (error) {
+      console.error('Custom file selection failed:', error)
+    }
+    return
+  }
+
+  // Otherwise use default file input
   fileInput.value?.click()
 }
 </script>

@@ -15,6 +15,8 @@ export interface SetImageAttrsOptions {
   flipX?: boolean
   /** image FlipY */
   flipY?: boolean
+  /** Border radius of the image */
+  borderRadius?: string | number | null
 }
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -64,6 +66,21 @@ export const Image = TiptapImage.extend({
           }
         },
       },
+      borderRadius: {
+        default: null,
+        parseHTML: element => {
+          const borderRadius = element.style.borderRadius || element.getAttribute('border-radius') || null
+          return borderRadius
+        },
+        renderHTML: attributes => {
+          if (!attributes.borderRadius) {
+            return {}
+          }
+          return {
+            style: `border-radius: ${attributes.borderRadius};`,
+          }
+        },
+      },
     }
   },
 
@@ -87,7 +104,7 @@ export const Image = TiptapImage.extend({
     }
   },
   renderHTML({ node, HTMLAttributes }) {
-    const { textAlign, flipX, flipY } = node.attrs
+    const { textAlign, flipX, flipY, borderRadius } = node.attrs
     const textAlignStyle =
       {
         left: 'margin-right: auto;',
@@ -96,7 +113,8 @@ export const Image = TiptapImage.extend({
       }[textAlign] || ''
     const transformStyle =
       flipX || flipY ? `transform: rotateX(${flipX ? '180' : '0'}deg) rotateY(${flipY ? '180' : '0'}deg);` : ''
-    const style = `${textAlignStyle} ${transformStyle}`
+    const borderRadiusStyle = borderRadius ? `border-radius: ${borderRadius};` : ''
+    const style = `${textAlignStyle} ${transformStyle} ${borderRadiusStyle}`
     return [
       'img',
       mergeAttributes(

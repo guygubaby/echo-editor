@@ -2,8 +2,14 @@ import { Node, VueNodeViewRenderer } from '@tiptap/vue-3'
 import VideoUploaderView from './components/VideoUploader.vue'
 import ActionButton from '@/components/ActionButton.vue'
 
+export interface SetVideoAttrsOptions {
+  src?: string
+  width?: string | number
+}
+
 export interface VideoOptions {
   upload?: (files: File[]) => void
+  customizedSelectFileFn?: () => Promise<SetVideoAttrsOptions | undefined> | SetVideoAttrsOptions | undefined
 }
 
 declare module '@tiptap/core' {
@@ -37,8 +43,8 @@ export const VideoUpload = Node.create<VideoOptions>({
     return {
       setVideoUpload:
         () =>
-          ({ commands }) =>
-            commands.insertContent(`<div data-type="${this.name}"></div>`),
+        ({ commands }) =>
+          commands.insertContent(`<div data-type="${this.name}"></div>`),
     }
   },
   addNodeView() {

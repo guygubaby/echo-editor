@@ -224,17 +224,21 @@ const fullExtensions = [
   Link,
   Image,
   ImageUpload.configure({
-    upload: (files: File) => {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve(URL.createObjectURL(files))
-        }, 3000)
-      })
+    customizedSelectFileFn() {
+      return {
+        src: 'https://picsum.photos/1920/1080.webp?t=1',
+        alt: 'test',
+      }
     },
   }),
-  Video,
+  Video.configure({}),
   VideoUpload.configure({
-    upload: handleFileUpload,
+    customizedSelectFileFn() {
+      return {
+        src: 'https://ciss-website.oss-cn-shanghai.aliyuncs.com/ciss-website/prod/Public/Experience/ECA/GetMP4.mp4',
+        width: '100%',
+      }
+    },
   }),
   Blockquote,
   SlashCommand,

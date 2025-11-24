@@ -37,7 +37,7 @@ const resizerState = ref<{ x: number; y: number; w: number; h: number; dir: stri
 })
 
 const imgAttrs = computed(() => {
-  const { src, alt, width, height, flipX, flipY } = props.node.attrs
+  const { src, alt, width, height, flipX, flipY, borderRadius } = props.node.attrs
   const transformStyles: any = []
   if (flipX) transformStyles.push('rotateX(180deg)')
   if (flipY) transformStyles.push('rotateY(180deg)')
@@ -50,6 +50,7 @@ const imgAttrs = computed(() => {
       width: isNumber(width) ? `${width}px` : width,
       height: isNumber(height) ? `${height}px` : height,
       transform: transform || 'none',
+      borderRadius: borderRadius || undefined,
     },
   }
 })
@@ -171,7 +172,11 @@ onBeforeUnmount(() => {
           :src="imgAttrs.src"
           :alt="imgAttrs.alt"
           ref="imageRef"
-          class="image-view__body__image block"
+          class="image-view__body__image block w-full object-cover"
+          :style="{
+            borderRadius: imgAttrs.style.borderRadius,
+            overflow: imgAttrs.style.borderRadius ? 'hidden' : undefined,
+          }"
           @click="selectImage"
         />
         <div v-if="editor.view.editable" v-show="selected || resizing" class="image-resizer">

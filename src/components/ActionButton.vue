@@ -50,13 +50,15 @@ withDefaults(defineProps<Props>(), {
           :class="[customClass, title ? 'w-auto' : 'w-[32px]']"
           @click="action"
         >
-          <div v-if="loading">
-            <Icon class="animate-spin" name="LoaderCircle" />
-          </div>
-          <div class="flex gap-1 items-center" v-else>
-            <Icon v-if="icon" :name="icon" />
-            <slot name="icon"></slot>
-          </div>
+          <template v-if="icon || $slots.icon">
+            <div v-if="loading">
+              <Icon class="animate-spin" name="LoaderCircle" />
+            </div>
+            <div class="flex gap-1 items-center" v-else>
+              <Icon v-if="icon" :name="icon" />
+              <slot name="icon"></slot>
+            </div>
+          </template>
           <div class="ml-1 font-normal" v-if="title">{{ title }}</div>
           <slot></slot>
         </Toggle>
