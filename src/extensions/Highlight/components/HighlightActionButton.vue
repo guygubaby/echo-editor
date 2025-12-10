@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
   presetColors: undefined,
 })
 
-const selectedColor = ref<string | undefined>(undefined)
+const selectedColor = ref<string | undefined>('#FBDE28')
 const { state } = useTiptapStore()!
 
 function onChange(color: string | undefined) {
@@ -81,7 +81,13 @@ watchEffect(() => {
         ></span>
       </template>
     </ActionButton>
-    <color-picker v-model="selectedColor" @change="onChange" highlight :disabled="disabled" :preset-colors="presetColors">
+    <color-picker
+      v-model="selectedColor"
+      @change="onChange"
+      highlight
+      :disabled="disabled"
+      :preset-colors="presetColors"
+    >
       <Button
         variant="ghost"
         size="icon"

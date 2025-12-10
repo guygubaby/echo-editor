@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
   presetColors: undefined,
 })
 
-const selectedColor = ref<string | undefined>(undefined)
+const selectedColor = ref<string | undefined>('#DF2A3F')
 function onChange(color: string | undefined) {
   props.action?.(color)
 }
