@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { reactive, watchEffect, ref, onMounted, watch } from 'vue'
+import { reactive, watchEffect, ref, onMounted } from 'vue'
 import { Icon } from '@/components/icons'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -54,20 +53,27 @@ onMounted(() => {
       <Label> {{ t('editor.link.dialog.text') }} </Label>
       <div class="flex w-full max-w-sm items-center gap-1.5">
         <div class="relative w-full max-w-sm items-center">
-          <Input
-            type="text"
+          <textarea
             v-model="form.text"
             required
-            class="w-80"
+            class="flex h-9 w-80 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             :placeholder="t('editor.link.dialog.input.text')"
-          />
+            rows="3"
+          ></textarea>
         </div>
       </div>
       <Label>{{ t('editor.link.dialog.link') }}</Label>
       <div class="flex w-full max-w-sm items-center gap-1.5">
         <div class="relative w-full max-w-sm items-center">
-          <Input :type="isStrictUrl ? 'url' : 'text'" ref="inputRef" v-model="form.link" required class="pl-10" />
-          <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+          <textarea
+            :type="isStrictUrl ? 'url' : 'text'"
+            ref="inputRef"
+            v-model="form.link"
+            required
+            class="flex h-9 w-80 rounded-md border border-input bg-transparent px-3 py-1 pl-10 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            rows="3"
+          ></textarea>
+          <span class="absolute start-0 top-2 flex items-center justify-center px-2">
             <Icon class="size-5 text-muted-foreground" name="Link" />
           </span>
         </div>

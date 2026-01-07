@@ -1,6 +1,6 @@
 {
   "name": "@bryce-loskie/echo-editor",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": false,
   "license": "MIT",
   "description": "Forked from LeeAt67/echo-editor, a modern AI-powered WYSIWYG and Highly Customized RichTextEditor for Vue, based on Tiptap and shadcn-vue",

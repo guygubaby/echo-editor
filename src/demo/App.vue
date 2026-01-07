@@ -224,6 +224,9 @@ const fullExtensions = [
   Link,
   Image,
   ImageUpload.configure({
+    upload(file) {
+      return Promise.resolve(URL.createObjectURL(file))
+    },
     customizedSelectFileFn() {
       return {
         src: 'https://picsum.photos/1920/1080.webp?t=1',
@@ -233,6 +236,9 @@ const fullExtensions = [
   }),
   Video.configure({}),
   VideoUpload.configure({
+    upload(file) {
+      return Promise.resolve(URL.createObjectURL(file))
+    },
     customizedSelectFileFn() {
       return {
         src: 'https://ciss-website.oss-cn-shanghai.aliyuncs.com/ciss-website/prod/Public/Experience/ECA/GetMP4.mp4',
