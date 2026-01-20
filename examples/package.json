@@ -6,7 +6,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "echo-editor": "workspace:*",
+    "@bryce-loskie/echo-editor": "workspace:*",
     "tailwindcss": "^3.4.3",
     "openai": "4.47.1",
     "prosemirror-docx": "latest",

@@ -7,6 +7,7 @@ import autoprefixer from 'autoprefixer'
 import type { Plugin } from 'vite'
 import postcss from 'postcss'
 import prefixer from 'postcss-prefix-selector'
+import { CodeInspectorPlugin } from 'code-inspector-plugin'
 
 function cssNamespacePlugin(): Plugin {
   return {
@@ -21,20 +22,17 @@ function cssNamespacePlugin(): Plugin {
             prefixer({
               prefix: '.echo-editor',
               transform(prefix, selector, prefixedSelector) {
-                if (
-                  selector.startsWith('.echo-editor') ||
-                  selector.startsWith('.EchoContentView')
-                ) {
-                  return selector;
+                if (selector.startsWith('.echo-editor') || selector.startsWith('.EchoContentView')) {
+                  return selector
                 }
-                return prefixedSelector;
-              }
-            })
-          ]).process(css, { from: undefined });
-          chunk.source = result.css;
+                return prefixedSelector
+              },
+            }),
+          ]).process(css, { from: undefined })
+          chunk.source = result.css
         }
       }
-    }
+    },
   }
 }
 
@@ -45,13 +43,14 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
       outDir: 'lib',
-      exclude: ['src/demo/**/*', 'examples/**/*']
+      exclude: ['src/demo/**/*', 'examples/**/*'],
     }),
     cssNamespacePlugin(),
+    CodeInspectorPlugin({ bundler: 'vite' }),
   ],
   optimizeDeps: {
     include: ['vue'],
-    exclude: ['examples/*', 'src/demo/*']
+    exclude: ['examples/*', 'src/demo/*'],
   },
   resolve: {
     alias: {
@@ -68,7 +67,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'EchoEditor',
-      fileName: (format) => `echo-editor.${format}.js`,
+      fileName: format => `echo-editor.${format}.js`,
     },
     cssCodeSplit: false,
     rollupOptions: {
@@ -77,12 +76,12 @@ export default defineConfig({
         globals: {
           vue: 'vue',
         },
-        assetFileNames: (info) => {
+        assetFileNames: info => {
           if (info.name && info.name.endsWith('.css')) {
-            return 'style.css';
+            return 'style.css'
           }
-          return 'assets/[name].[hash][extname]';
-        }
+          return 'assets/[name].[hash][extname]'
+        },
       },
       external: ['vue'],
     },

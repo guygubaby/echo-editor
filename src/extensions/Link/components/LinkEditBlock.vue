@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, watchEffect, ref, onMounted } from 'vue'
+import { watchEffect, ref, onMounted } from 'vue'
 import { Icon } from '@/components/icons'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
@@ -17,7 +17,7 @@ const emits = defineEmits(['onSetLink', 'onClickOutside'])
 
 const { t } = useLocale()
 
-let form = reactive({
+const formRef = ref({
   text: '',
   link: '',
 })
@@ -32,7 +32,7 @@ watchEffect(() => {
   const { href: link, target = '_blank', strictUrl } = props.editor.getAttributes('link')
   const { from, to } = props.editor.state.selection
   const text = props.editor.state.doc.textBetween(from, to, ' ')
-  form = {
+  formRef.value = {
     link,
     text,
   }
@@ -40,7 +40,8 @@ watchEffect(() => {
   isStrictUrl.value = strictUrl
 })
 function handleSubmit() {
-  emits('onSetLink', form.link, form.text, openInNewTab.value)
+  const { link, text } = formRef.value
+  emits('onSetLink', link, text, openInNewTab.value)
 }
 onMounted(() => {
   focused.value = true
@@ -54,7 +55,7 @@ onMounted(() => {
       <div class="flex w-full max-w-sm items-center gap-1.5">
         <div class="relative w-full max-w-sm items-center">
           <textarea
-            v-model="form.text"
+            v-model="formRef.text"
             required
             class="flex h-9 w-80 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             :placeholder="t('editor.link.dialog.input.text')"
@@ -68,7 +69,7 @@ onMounted(() => {
           <textarea
             :type="isStrictUrl ? 'url' : 'text'"
             ref="inputRef"
-            v-model="form.link"
+            v-model="formRef.link"
             required
             class="flex h-9 w-80 rounded-md border border-input bg-transparent px-3 py-1 pl-10 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             rows="3"
