@@ -29,7 +29,7 @@ const target = ref(null)
 onClickOutside(target, event => emits('onClickOutside', event))
 
 watchEffect(() => {
-  const { href: link, target, strictUrl } = props.editor.getAttributes('link')
+  const { href: link, target = '_blank', strictUrl } = props.editor.getAttributes('link')
   const { from, to } = props.editor.state.selection
   const text = props.editor.state.doc.textBetween(from, to, ' ')
   form = {

@@ -33,9 +33,10 @@ export const Link = TiptapLink.extend<LinkOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
+    const { strictUrl, ...rest } = HTMLAttributes
     return [
       'a',
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+      mergeAttributes(this.options.HTMLAttributes, rest, {
         class: 'link',
       }),
       0,
