@@ -9,6 +9,7 @@ import type { BaseKitOptions } from '@/extensions/BaseKit'
 import type { BubbleTypeMenu } from './BasicBubble'
 import { useLocale } from '@/locales'
 import { useTiptapStore } from '@/hooks'
+import { getBubbleAppendTo } from './BasicBubble'
 
 interface Props {
   editor: Editor
@@ -25,7 +26,7 @@ const { t } = useLocale()
 const tippyOptions = reactive<Record<string, unknown>>({
   maxWidth: 'auto',
   zIndex: 20,
-  appendTo: 'parent',
+  appendTo: () => getBubbleAppendTo(),
   moveTransition: 'transform 0.15s ease-out',
 })
 

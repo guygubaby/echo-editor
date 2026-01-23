@@ -170,3 +170,14 @@ export const generateBubbleTypeMenu = <T = any>(
 
   return items
 }
+
+let elem: HTMLDivElement | null = null
+
+export const getBubbleAppendTo = () => {
+  if (!elem) {
+    elem = document.createElement('div')
+    elem.classList.add('echo-editor')
+    document.body.appendChild(elem)
+  }
+  return elem
+}

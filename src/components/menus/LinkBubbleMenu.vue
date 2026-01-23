@@ -5,6 +5,7 @@ import { BubbleMenu } from '@tiptap/vue-3'
 import LinkEditBlock from '@/extensions/Link/components/LinkEditBlock.vue'
 import LinkViewBlock from '@/extensions/Link/components/LinkViewBlock.vue'
 import { TextSelection } from '@tiptap/pm/state'
+import { getBubbleAppendTo } from './BasicBubble'
 
 interface Props {
   editor: Editor
@@ -60,7 +61,7 @@ function onClickOutside() {
 }
 
 const getAppendTo = () => {
-  return document.body
+  return getBubbleAppendTo()
 }
 </script>
 
@@ -68,7 +69,6 @@ const getAppendTo = () => {
   <BubbleMenu
     :editor="editor"
     v-show="shouldShow"
-    class="bg-white [--popover:0_0%_100%] [--border:240_5.9%_90%]"
     :update-delay="0"
     :tippy-options="{
       popperOptions: {
