@@ -64,7 +64,7 @@
   }
 
   a.link {
-    @apply text-blue-500 font-extrabold dark:text-blue-400;
+    @apply text-blue-500 dark:text-blue-400;
   }
 
   mark {
@@ -242,11 +242,11 @@
   /* Comment styles - 评论样式 */
   .echo-comment {
     @apply bg-yellow-100 dark:bg-yellow-900/30 px-0.5 rounded cursor-pointer transition-colors;
-    
+
     &:hover {
       @apply bg-yellow-200 dark:bg-yellow-800/40;
     }
-    
+
     &[data-comment-active="true"] {
       @apply bg-yellow-300 dark:bg-yellow-700/50 ring-2 ring-yellow-400 dark:ring-yellow-600;
     }

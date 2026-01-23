@@ -58,21 +58,26 @@ function onClickOutside() {
   view.dispatch(transaction)
   showEdit.value = false
 }
+
+const getAppendTo = () => {
+  return document.body
+}
 </script>
 
 <template>
   <BubbleMenu
     :editor="editor"
     v-show="shouldShow"
+    class="bg-white [--popover:0_0%_100%] [--border:240_5.9%_90%]"
     :update-delay="0"
     :tippy-options="{
       popperOptions: {
-        modifiers: [{ name: 'flip', enabled: false }],
+        modifiers: [{ name: 'flip', enabled: true }],
       },
-      appendTo: 'parent',
+      appendTo: getAppendTo,
       placement: 'bottom-start',
       offset: [-2, 16],
-      zIndex: 99,
+      zIndex: 999,
       onHidden: () => {
         showEdit = false
       },

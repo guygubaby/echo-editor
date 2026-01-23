@@ -191,12 +191,9 @@ watch(
 )
 
 // Watch fullscreen state and emit to parent component
-watch(
-  isFullscreen,
-  val => {
-    emit('fullscreenChange', val)
-  }
-)
+watch(isFullscreen, val => {
+  emit('fullscreenChange', val)
+})
 
 onUnmounted(() => {
   editor?.destroy()

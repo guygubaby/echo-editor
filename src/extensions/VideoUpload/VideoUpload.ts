@@ -8,7 +8,7 @@ export interface SetVideoAttrsOptions {
 }
 
 export interface VideoOptions {
-  upload?: (files: File[]) => void
+  upload?: (file: File) => Promise<string>
   customizedSelectFileFn?: () => Promise<SetVideoAttrsOptions | undefined> | SetVideoAttrsOptions | undefined
 }
 
