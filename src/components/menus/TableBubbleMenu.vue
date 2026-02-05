@@ -7,6 +7,7 @@ import { sticky } from 'tippy.js'
 import type { GetReferenceClientRect } from 'tippy.js'
 import HighlightActionButton from '@/extensions/Highlight/components/HighlightActionButton.vue'
 import { Separator } from '@/components/ui/separator'
+import { getBubbleAppendTo } from './BasicBubble'
 
 interface Props {
   editor: Editor
@@ -64,15 +65,15 @@ const getReferenceClientRect: GetReferenceClientRect = () => {
 
   // 获取当前选中的表格节点
   let node = view.domAtPos(from).node as HTMLElement
-  
+
   // 修复：如果是文本节点（没有 tagName 属性），获取其父元素
   // 文本节点没有 closest() 方法，需要使用父元素
   if (!node || !(node as any).tagName) {
     node = (node as any)?.parentElement
   }
-  
+
   if (!node) return new DOMRect(-1000, -1000, 0, 0)
-  
+
   // 获取表格元素
   const tableWrapper = node.closest('.tableWrapper')
   if (!tableWrapper) return new DOMRect(-1000, -1000, 0, 0)
@@ -82,6 +83,10 @@ const getReferenceClientRect: GetReferenceClientRect = () => {
   // 返回一个新的 DOMRect，将 bubble menu 定位在表格的上方
   return rect
 }
+
+const getAppendTo = () => {
+  return getBubbleAppendTo()
+}
 </script>
 <template>
   <BubbleMenu
@@ -90,6 +95,11 @@ const getReferenceClientRect: GetReferenceClientRect = () => {
     :shouldShow="shouldShow"
     :updateDelay="0"
     :tippy-options="{
+      popperOptions: {
+        modifiers: [{ name: 'flip', enabled: true }],
+      },
+      appendTo: getAppendTo,
+      zIndex: 9999,
       offset: [0, 8],
       maxWidth: 'auto',
       getReferenceClientRect,

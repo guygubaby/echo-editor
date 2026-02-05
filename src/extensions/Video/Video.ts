@@ -86,6 +86,8 @@ type SetVideoOptions = {
   muted?: boolean
   /** Whether the video should play inline on mobile */
   playsInline?: boolean
+  /** Text alignment for the video container */
+  textAlign?: 'left' | 'center' | 'right'
 }
 
 declare module '@tiptap/core' {
@@ -154,6 +156,9 @@ export const Video = Node.create<VideoOptions>({
         default: this.options.playsInline,
         renderHTML: ({ playsInline }) => (playsInline ? { playsinline: '' } : {}),
       },
+      textAlign: {
+        default: 'center',
+      },
     }
   },
 
@@ -168,10 +173,19 @@ export const Video = Node.create<VideoOptions>({
     ]
   },
 
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({ node, HTMLAttributes }) {
+    const { textAlign } = node.attrs
+    const justifyContent =
+      {
+        left: 'flex-start',
+        center: 'center',
+        right: 'flex-end',
+      }[textAlign as string] || 'center'
+
     const divAttrs = {
       ...this.options.HTMLAttributes,
       'data-video': '',
+      style: `display: flex; justify-content: ${justifyContent};`,
     }
 
     return ['div', divAttrs, ['video', HTMLAttributes]]

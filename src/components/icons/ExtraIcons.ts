@@ -1,6 +1,4 @@
-
 import { createLucideIcon } from 'lucide-vue-next'
-
 
 export const ExtraIcons = {
   ColumnDelete: createLucideIcon('ColumnDelete', [
@@ -9,7 +7,7 @@ export const ExtraIcons = {
       {
         d: 'M5.5 3c1.404 0 2.107 0 2.611.38c.219.164.406.375.552.62C9 4.568 9 5.358 9 6.938v10.125c0 1.58 0 2.37-.337 2.937a2.1 2.1 0 0 1-.552.621c-.504.38-1.207.38-2.611.38s-2.107 0-2.611-.38a2.1 2.1 0 0 1-.552-.62C2 19.432 2 18.642 2 17.062V6.938c0-1.58 0-2.37.337-2.938a2.1 2.1 0 0 1 .552-.62C3.393 3 4.096 3 5.5 3M20 11.938v5.124c0 1.58 0 2.37-.337 2.938a2.1 2.1 0 0 1-.552.62c-.504.38-1.207.38-2.611.38s-2.107 0-2.611-.38a2.1 2.1 0 0 1-.552-.62C13 19.433 13 18.642 13 17.063V6.938c0-1.58 0-2.37.337-2.938M22 9l-6-6m6 0l-6 6',
         key: 'ColumnDelete',
-        fill: 'none'
+        fill: 'none',
       },
     ],
   ]),
@@ -19,7 +17,7 @@ export const ExtraIcons = {
       {
         d: 'M21 18.5c0 1.404 0 2.107-.38 2.611a2.1 2.1 0 0 1-.62.552c-.567.337-1.358.337-2.937.337H6.938c-1.58 0-2.37 0-2.938-.337a2.1 2.1 0 0 1-.62-.552C3 20.607 3 19.904 3 18.5s0-2.107.38-2.611c.163-.218.374-.406.62-.552C4.567 15 5.357 15 6.938 15h10.125c1.58 0 2.37 0 2.937.337c.246.146.457.334.62.552c.38.504.38 1.207.38 2.611M12.063 4H6.937C5.358 4 4.568 4 4 4.337a2.1 2.1 0 0 0-.62.552C3 5.393 3 6.096 3 7.5s0 2.107.38 2.611c.163.218.374.406.62.552C4.567 11 5.357 11 6.938 11h10.125c1.58 0 2.37 0 2.937-.337M21 8l-6-6m6 0l-6 6',
         key: 'RowDelete',
-        fill: 'none'
+        fill: 'none',
       },
     ],
   ]),
@@ -27,38 +25,58 @@ export const ExtraIcons = {
     [
       'path',
       {
-        d: "M10 3v4a1 1 0 0 1-1 1H5m4 4l1 5l2-3.333L14 17l1-5m4-8v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1"
-      }
+        d: 'M10 3v4a1 1 0 0 1-1 1H5m4 4l1 5l2-3.333L14 17l1-5m4-8v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1',
+      },
+    ],
+  ]),
+  SizeXXS: createLucideIcon('SizeXXS', [
+    [
+      'path',
+      {
+        d: 'M12 9c-.66 0-1.2.54-1.2 1.2v1.2a1.2 1.2 0 0 0 1.2 1.2h1.2v1.2H9.6v1.2h2.4c.67 0 1.2-.54 1.2-1.2v-1.2a1.2 1.2 0 0 0-1.2-1.2h-1.2v-1.2h2.4V9z',
+        'stroke-width': '0',
+        fill: 'currentColor',
+      },
+    ],
+  ]),
+  SizeXS: createLucideIcon('SizeXS', [
+    [
+      'path',
+      {
+        d: 'M11 7.6c-.88 0-1.6.72-1.6 1.6v1.6a1.6 1.6 0 0 0 1.6 1.6h1.6v1.6H9.2v1.6h3.2c.89 0 1.6-.72 1.6-1.6v-1.6a1.6 1.6 0 0 0-1.6-1.6h-1.6V9.2h3.2V7.6z',
+        'stroke-width': '0',
+        fill: 'currentColor',
+      },
     ],
   ]),
   SizeS: createLucideIcon('SizeS', [
     [
       'path',
       {
-        d: "M11 7c-1.1 0-2 .9-2 2v2a2 2 0 0 0 2 2h2v2H9v2h4c1.11 0 2-.89 2-2v-2a2 2 0 0 0-2-2h-2V9h4V7z",
+        d: 'M11 7c-1.1 0-2 .9-2 2v2a2 2 0 0 0 2 2h2v2H9v2h4c1.11 0 2-.89 2-2v-2a2 2 0 0 0-2-2h-2V9h4V7z',
         'stroke-width': '0',
-        'fill': 'currentColor'
-      }
+        fill: 'currentColor',
+      },
     ],
   ]),
   SizeM: createLucideIcon('SizeM', [
     [
       'path',
       {
-        d: "M9 7c-1.1 0-2 .9-2 2v8h2V9h2v7h2V9h2v8h2V9a2 2 0 0 0-2-2z",
+        d: 'M9 7c-1.1 0-2 .9-2 2v8h2V9h2v7h2V9h2v8h2V9a2 2 0 0 0-2-2z',
         'stroke-width': '0',
-        'fill': 'currentColor'
-      }
+        fill: 'currentColor',
+      },
     ],
   ]),
   SizeL: createLucideIcon('SizeL', [
     [
       'path',
       {
-        d: "M9 7v10h6v-2h-4V7z",
+        d: 'M9 7v10h6v-2h-4V7z',
         'stroke-width': '0',
-        'fill': 'currentColor'
-      }
+        fill: 'currentColor',
+      },
     ],
   ]),
   Comment: createLucideIcon('Comment', [
@@ -70,8 +88,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -81,8 +99,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -92,8 +110,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -103,8 +121,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -114,11 +132,11 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
   ]),
-  // AI 相关图标 
+  // AI 相关图标
   AIImprove: createLucideIcon('AIImprove', [
     [
       'path',
@@ -128,8 +146,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -139,8 +157,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
   ]),
   AILonger: createLucideIcon('AILonger', [
@@ -152,8 +170,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
   ]),
   AIShorter: createLucideIcon('AIShorter', [
@@ -165,8 +183,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -176,8 +194,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -187,8 +205,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -198,8 +216,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -209,8 +227,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
   ]),
   AISummarize: createLucideIcon('AISummarize', [
@@ -222,8 +240,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -233,8 +251,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -244,8 +262,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -255,8 +273,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
   ]),
   AITranslate: createLucideIcon('AITranslate', [
@@ -268,8 +286,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -279,8 +297,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -290,8 +308,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -301,8 +319,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -312,8 +330,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
   ]),
   AIFlowchart: createLucideIcon('AIFlowchart', [
@@ -325,8 +343,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -336,8 +354,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
   ]),
   AITable: createLucideIcon('AITable', [
@@ -349,8 +367,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
     [
       'path',
@@ -360,8 +378,8 @@ export const ExtraIcons = {
         'stroke-width': '2',
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round',
-        fill: 'none'
-      }
+        fill: 'none',
+      },
     ],
   ]),
 }

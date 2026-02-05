@@ -25,6 +25,8 @@ const locale: Record<string, string> = {
   'editor.slash.embed': '嵌入第三方服务',
   'editor.content': '请输入正文',
   'editor.size.small.tooltip': '小尺寸',
+  'editor.size.x-small.tooltip': 'X-小尺寸',
+  'editor.size.xx-small.tooltip': 'XX-小尺寸',
   'editor.size.medium.tooltip': '中等尺寸',
   'editor.size.large.tooltip': '铺满',
   'editor.bold.tooltip': '粗体',

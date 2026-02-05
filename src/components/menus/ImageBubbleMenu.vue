@@ -12,7 +12,7 @@ import { Separator } from '@/components/ui/separator'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import ActionButton from '@/components/ActionButton.vue'
-
+import { getBubbleAppendTo } from './BasicBubble'
 interface Props {
   editor: Editor
   disabled?: boolean
@@ -142,6 +142,10 @@ function handleRemove() {
   const { state, dispatch } = props.editor.view
   deleteSelection(state, dispatch)
 }
+
+const getAppendTo = () => {
+  return getBubbleAppendTo()
+}
 </script>
 <template>
   <BubbleMenu
@@ -150,9 +154,12 @@ function handleRemove() {
     :shouldShow="shouldShow"
     :updateDelay="0"
     :tippy-options="{
+      popperOptions: {
+        modifiers: [{ name: 'flip', enabled: true }],
+      },
+      appendTo: getAppendTo,
       offset: [0, 8],
-      zIndex: 10,
-      appendTo: 'parent',
+      zIndex: 9999,
       getReferenceClientRect: getReferenceClientRect.value,
       plugins: [sticky],
       sticky: 'popper',

@@ -25,7 +25,7 @@ const store = useTiptapStore()
 const { t } = useLocale()
 const tippyOptions = reactive<Record<string, unknown>>({
   maxWidth: 'auto',
-  zIndex: 20,
+  zIndex: 9999,
   appendTo: () => getBubbleAppendTo(),
   moveTransition: 'transform 0.15s ease-out',
 })

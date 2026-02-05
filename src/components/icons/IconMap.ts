@@ -165,6 +165,8 @@ export const icons = {
   Copy,
   Clipboard,
   MenuDown: ChevronDown,
+  SizeXXS: ExtraIcons.SizeXXS,
+  SizeXS: ExtraIcons.SizeXS,
   SizeS: ExtraIcons.SizeS,
   SizeM: ExtraIcons.SizeM,
   SizeL: ExtraIcons.SizeL,

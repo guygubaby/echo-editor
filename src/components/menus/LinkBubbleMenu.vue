@@ -77,7 +77,7 @@ const getAppendTo = () => {
       appendTo: getAppendTo,
       placement: 'bottom-start',
       offset: [-2, 16],
-      zIndex: 999,
+      zIndex: 9999,
       onHidden: () => {
         showEdit = false
       },

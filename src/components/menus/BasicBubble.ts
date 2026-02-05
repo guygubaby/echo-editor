@@ -5,7 +5,7 @@ import { VIDEO_SIZE } from '@/constants'
 import type { ButtonViewParams, ButtonViewReturn, ExtensionNameKeys } from '@/type'
 
 /** Represents the size types for bubble images or videos */
-type BubbleImageOrVideoSizeType = 'size-small' | 'size-medium' | 'size-large'
+type BubbleImageOrVideoSizeType = 'size-xx-small' | 'size-x-small' | 'size-small' | 'size-medium' | 'size-large'
 
 /** Represents the various types for bubble images */
 type BubbleImageType = `video-${BubbleImageOrVideoSizeType}` | 'image' | 'image-aspect-ratio' | 'remove'
@@ -61,8 +61,20 @@ export interface BubbleOptions<T> {
 
 // 视频尺寸菜单
 const videoSizeMenus = (editor: Editor): BubbleMenuItem[] => {
-  const types: BubbleImageOrVideoSizeType[] = ['size-small', 'size-medium', 'size-large']
-  const icons: NonNullable<ButtonViewReturn['componentProps']['icon']>[] = ['SizeS', 'SizeM', 'SizeL']
+  const types: BubbleImageOrVideoSizeType[] = [
+    'size-xx-small',
+    'size-x-small',
+    'size-small',
+    'size-medium',
+    'size-large',
+  ]
+  const icons: NonNullable<ButtonViewReturn['componentProps']['icon']>[] = [
+    'SizeXXS',
+    'SizeXS',
+    'SizeS',
+    'SizeM',
+    'SizeL',
+  ]
 
   return types.map((size, i) => ({
     type: `video-${size}`,

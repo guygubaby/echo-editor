@@ -6,7 +6,7 @@ import ActionButton from '@/components/ActionButton.vue'
 import { ColumnLayout } from '@/extensions/MultiColumn'
 import { getRenderContainer } from '@/utils/getRenderContainer'
 import { useLocale } from '@/locales'
-
+import { getBubbleAppendTo } from './BasicBubble'
 interface Props {
   editor: Editor
   disabled?: boolean
@@ -31,6 +31,10 @@ const getReferenceClientRect = () => {
 const onDelete = () => {
   props.editor.chain().focus().deleteNode('columns').run()
 }
+
+const getAppendTo = () => {
+  return getBubbleAppendTo()
+}
 </script>
 
 <template>
@@ -40,6 +44,11 @@ const onDelete = () => {
     :shouldShow="shouldShow"
     :updateDelay="0"
     :tippy-options="{
+      popperOptions: {
+        modifiers: [{ name: 'flip', enabled: true }],
+      },
+      appendTo: getAppendTo,
+      zIndex: 9999,
       offset: [0, 8],
       getReferenceClientRect,
       plugins: [sticky],

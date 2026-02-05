@@ -7,16 +7,26 @@ import { getRenderContainer } from '@/utils/getRenderContainer'
 import { useLocale } from '@/locales'
 import { deleteSelection } from '@tiptap/pm/commands'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Separator } from '@/components/ui/separator'
 import { MenuCheckboxItem } from '@/components/ui/menu'
+import { Label } from '@/components/ui/label'
 import ActionButton from '@/components/ActionButton.vue'
-import { VIDEO_SIZE } from '@/constants'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-
+import { getBubbleAppendTo } from './BasicBubble'
 interface Props {
   editor: Editor
   disabled?: boolean
+}
+
+type VideoAlignments = 'left' | 'center' | 'right'
+
+const videoAlign: VideoAlignments[] = ['left', 'center', 'right']
+const alignIconMap: Record<VideoAlignments, 'AlignLeft' | 'AlignCenter' | 'AlignRight'> = {
+  left: 'AlignLeft',
+  center: 'AlignCenter',
+  right: 'AlignRight',
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -26,6 +36,8 @@ const props = withDefaults(defineProps<Props>(), {
 const { t } = useLocale()
 
 const posterUrl = ref('')
+const videoWidth = ref<number | null>(null)
+const videoPercent = ref('100')
 
 const videoOptions = computed(() => {
   return props.editor.extensionManager.extensions.find(extension => extension.name === 'video')?.options
@@ -72,8 +84,29 @@ function handleObjectFitChange(value: string) {
     .run()
 }
 
-function handleSizeChange(size: 'size-small' | 'size-medium' | 'size-large') {
-  props.editor.chain().focus().updateVideo({ width: VIDEO_SIZE[size] }).run()
+function updateVideoSize(event?: Event) {
+  event?.preventDefault()
+  props.editor
+    .chain()
+    .focus(undefined, { scrollIntoView: false })
+    .updateVideo({
+      width: videoWidth.value ? `${videoWidth.value}px` : null,
+    })
+    .run()
+}
+
+function changeVideoPercent(event?: Event) {
+  event?.preventDefault()
+  const percent = Math.max(0, Math.min(100, parseInt(videoPercent.value)))
+  props.editor
+    .chain()
+    .focus(undefined, { scrollIntoView: false })
+    .updateVideo({ width: `${percent}%` })
+    .run()
+}
+
+function handleSetVideoAlign(align: VideoAlignments) {
+  props.editor.chain().focus().updateVideo({ textAlign: align }).run()
 }
 
 function handlePosterChange() {
@@ -117,16 +150,32 @@ const getReferenceClientRect = computed(() => {
   return renderContainer?.getBoundingClientRect() || new DOMRect(-1000, -1000, 0, 0)
 })
 
+const getAppendTo = () => {
+  return getBubbleAppendTo()
+}
+
 // Sync posterUrl with current poster when video is selected
 watch(
   () => props.editor.getAttributes('video'),
   attrs => {
     if (attrs) {
       posterUrl.value = attrs.poster || ''
+      // Parse width value
+      const widthAttr = attrs.width
+      if (widthAttr) {
+        const parsed = parseInt(widthAttr, 10)
+        videoWidth.value = isNaN(parsed) ? null : parsed
+      }
     }
   },
   { immediate: true }
 )
+
+watch(videoPercent, () => {
+  if (videoPercent.value) {
+    changeVideoPercent()
+  }
+})
 </script>
 
 <template>
@@ -137,8 +186,11 @@ watch(
     :updateDelay="0"
     :tippy-options="{
       offset: [0, 8],
-      zIndex: 10,
-      appendTo: 'parent',
+      zIndex: 9999,
+      popperOptions: {
+        modifiers: [{ name: 'flip', enabled: true }],
+      },
+      appendTo: getAppendTo,
       getReferenceClientRect: getReferenceClientRect.value,
       plugins: [sticky],
       sticky: 'popper',
@@ -149,23 +201,47 @@ watch(
       class="border px-3 py-2 transition-all select-none pointer-events-auto shadow-sm rounded-sm w-auto bg-background"
     >
       <div class="flex items-center flex-nowrap whitespace-nowrap h-[26px] justify-start relative gap-0.5">
+        <Popover>
+          <PopoverTrigger>
+            <ActionButton :title="t('editor.image.menu.size')" icon="ImageSize" />
+          </PopoverTrigger>
+          <PopoverContent class="w-72">
+            <div class="flex items-center gap-2">
+              <Label for="videoWidth" class="whitespace-nowrap">{{ t('editor.image.menu.size.width') }}</Label>
+              <Input
+                id="videoWidth"
+                v-model="videoWidth"
+                type="number"
+                @keyup.enter="updateVideoSize"
+                class="w-24 h-8 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              />
+            </div>
+            <div class="mt-3">
+              <Tabs
+                v-model:model-value="videoPercent"
+                @update:model-value="
+                  value => {
+                    videoPercent = value as string
+                  }
+                "
+              >
+                <TabsList>
+                  <TabsTrigger v-for="value in ['25', '50', '75', '100']" :key="value" :value="value">
+                    {{ value }}%
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+          </PopoverContent>
+        </Popover>
+        <Separator orientation="vertical" class="mx-1 me-2 h-[16px]" />
         <ActionButton
-          :tooltip="t('editor.size.small.tooltip')"
-          icon="SizeS"
-          :action="() => handleSizeChange('size-small')"
-          :is-active="() => editor.isActive('video', { width: VIDEO_SIZE['size-small'] })"
-        />
-        <ActionButton
-          :tooltip="t('editor.size.medium.tooltip')"
-          icon="SizeM"
-          :action="() => handleSizeChange('size-medium')"
-          :is-active="() => editor.isActive('video', { width: VIDEO_SIZE['size-medium'] })"
-        />
-        <ActionButton
-          :tooltip="t('editor.size.large.tooltip')"
-          icon="SizeL"
-          :action="() => handleSizeChange('size-large')"
-          :is-active="() => editor.isActive('video', { width: VIDEO_SIZE['size-large'] })"
+          v-for="(item, index) in videoAlign"
+          :key="index"
+          :tooltip="t(`editor.textalign.${item}.tooltip`)"
+          :icon="alignIconMap[item]"
+          :action="() => handleSetVideoAlign(item)"
+          :is-active="() => editor.isActive('video', { textAlign: item })"
         />
         <Separator orientation="vertical" class="mx-1 me-2 h-[16px]" />
         <Popover>

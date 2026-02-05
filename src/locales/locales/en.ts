@@ -25,6 +25,8 @@ const locale: Record<string, string> = {
   'editor.content': 'Please input content',
   'editor.moremark': 'More Text Styles',
   'editor.size.small.tooltip': 'Small',
+  'editor.size.x-small.tooltip': 'X-Small',
+  'editor.size.xx-small.tooltip': 'XX-Small',
   'editor.size.medium.tooltip': 'Medium',
   'editor.size.large.tooltip': 'Cover',
   'editor.bold.tooltip': 'Bold',

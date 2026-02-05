@@ -122,6 +122,8 @@ export const DEFAULT_FONT_SIZE_VALUE = 'defaut' as const
 
 /** Options for setting video size in the bubble menu */
 export enum VIDEO_SIZE {
+  'size-xx-small' = 240,
+  'size-x-small' = 320,
   'size-small' = 480,
   'size-medium' = 640,
   'size-large' = '100%',

@@ -65,7 +65,7 @@ withDefaults(defineProps<Props>(), {
       </TooltipTrigger>
       <TooltipContent v-if="tooltip" v-bind="tooltipOptions">
         <div class="max-w-24 text-center flex flex-col items-center">
-          <div>{{ tooltip }}</div>
+          <div class="z-99999">{{ tooltip }}</div>
           <div v-if="shortcutKeys && shortcutKeys.length" style="display: flex; gap: 4px">
             <span v-for="(shortcutKey, index) in shortcutKeys" :key="index">
               {{ getShortcutKey(shortcutKey) }}
