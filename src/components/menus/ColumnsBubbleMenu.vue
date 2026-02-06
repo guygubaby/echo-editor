@@ -6,7 +6,7 @@ import ActionButton from '@/components/ActionButton.vue'
 import { ColumnLayout } from '@/extensions/MultiColumn'
 import { getRenderContainer } from '@/utils/getRenderContainer'
 import { useLocale } from '@/locales'
-import { getBubbleAppendTo } from './BasicBubble'
+import { getBubbleAppendTo, triggerBubbleReposition } from './BasicBubble'
 interface Props {
   editor: Editor
   disabled?: boolean
@@ -45,7 +45,10 @@ const getAppendTo = () => {
     :updateDelay="0"
     :tippy-options="{
       popperOptions: {
-        modifiers: [{ name: 'flip', enabled: true }],
+        modifiers: [
+          { name: 'flip', enabled: true },
+          { name: 'preventOverflow', enabled: true, options: { padding: 8 } },
+        ],
       },
       appendTo: getAppendTo,
       zIndex: 9999,
@@ -53,6 +56,7 @@ const getAppendTo = () => {
       getReferenceClientRect,
       plugins: [sticky],
       sticky: 'popper',
+      onShow: triggerBubbleReposition,
     }"
   >
     <div class="p-2 bg-background rounded-lg shadow-sm border">

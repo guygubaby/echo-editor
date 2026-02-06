@@ -7,7 +7,7 @@ import { sticky } from 'tippy.js'
 import type { GetReferenceClientRect } from 'tippy.js'
 import HighlightActionButton from '@/extensions/Highlight/components/HighlightActionButton.vue'
 import { Separator } from '@/components/ui/separator'
-import { getBubbleAppendTo } from './BasicBubble'
+import { getBubbleAppendTo, triggerBubbleReposition } from './BasicBubble'
 
 interface Props {
   editor: Editor
@@ -96,7 +96,10 @@ const getAppendTo = () => {
     :updateDelay="0"
     :tippy-options="{
       popperOptions: {
-        modifiers: [{ name: 'flip', enabled: true }],
+        modifiers: [
+          { name: 'flip', enabled: true },
+          { name: 'preventOverflow', enabled: true, options: { padding: 8 } },
+        ],
       },
       appendTo: getAppendTo,
       zIndex: 9999,
@@ -105,6 +108,7 @@ const getAppendTo = () => {
       getReferenceClientRect,
       plugins: [sticky],
       sticky: 'popper',
+      onShow: triggerBubbleReposition,
     }"
   >
     <div

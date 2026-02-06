@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import type { Editor } from '@tiptap/vue-3'
 import { BubbleMenu } from '@tiptap/vue-3'
 import LinkEditBlock from '@/extensions/Link/components/LinkEditBlock.vue'
 import LinkViewBlock from '@/extensions/Link/components/LinkViewBlock.vue'
 import { TextSelection } from '@tiptap/pm/state'
-import { getBubbleAppendTo } from './BasicBubble'
+import { getBubbleAppendTo, triggerBubbleReposition } from './BasicBubble'
+import { whenever } from '@vueuse/core'
 
 interface Props {
   editor: Editor
@@ -60,6 +61,10 @@ function onClickOutside() {
   showEdit.value = false
 }
 
+whenever(showEdit, () => {
+  triggerBubbleReposition()
+})
+
 const getAppendTo = () => {
   return getBubbleAppendTo()
 }
@@ -72,7 +77,10 @@ const getAppendTo = () => {
     :update-delay="0"
     :tippy-options="{
       popperOptions: {
-        modifiers: [{ name: 'flip', enabled: true }],
+        modifiers: [
+          { name: 'flip', enabled: true },
+          { name: 'preventOverflow', enabled: true, options: { padding: 8 } },
+        ],
       },
       appendTo: getAppendTo,
       placement: 'bottom-start',

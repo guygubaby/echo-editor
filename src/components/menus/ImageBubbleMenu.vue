@@ -12,7 +12,7 @@ import { Separator } from '@/components/ui/separator'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import ActionButton from '@/components/ActionButton.vue'
-import { getBubbleAppendTo } from './BasicBubble'
+import { getBubbleAppendTo, triggerBubbleReposition } from './BasicBubble'
 interface Props {
   editor: Editor
   disabled?: boolean
@@ -155,7 +155,10 @@ const getAppendTo = () => {
     :updateDelay="0"
     :tippy-options="{
       popperOptions: {
-        modifiers: [{ name: 'flip', enabled: true }],
+        modifiers: [
+          { name: 'flip', enabled: true },
+          { name: 'preventOverflow', enabled: true, options: { padding: 8 } },
+        ],
       },
       appendTo: getAppendTo,
       offset: [0, 8],
@@ -163,6 +166,7 @@ const getAppendTo = () => {
       getReferenceClientRect: getReferenceClientRect.value,
       plugins: [sticky],
       sticky: 'popper',
+      onShow: triggerBubbleReposition,
     }"
   >
     <div

@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { useFocus } from '@vueuse/core'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { Icon } from '@/components/icons'
+import { triggerBubbleReposition } from './BasicBubble'
 import type { Props as TippyProps } from 'tippy.js'
 import { reactive } from 'vue'
 
@@ -141,11 +142,18 @@ const tippyOptions = reactive<Partial<TippyProps>>({
   zIndex: 99,
   appendTo: 'parent',
   placement: 'bottom-start',
+  popperOptions: {
+    modifiers: [
+      { name: 'flip', enabled: true },
+      { name: 'preventOverflow', enabled: true, options: { padding: 8 } },
+    ],
+  },
   onShow(instance) {
     tippyInstance.value = instance
     bind()
     setTimeout(() => {
       focused.value = true
+      triggerBubbleReposition()
     }, 30)
   },
   onHide() {

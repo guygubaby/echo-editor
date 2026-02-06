@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label'
 import ActionButton from '@/components/ActionButton.vue'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-import { getBubbleAppendTo } from './BasicBubble'
+import { getBubbleAppendTo, triggerBubbleReposition } from './BasicBubble'
 interface Props {
   editor: Editor
   disabled?: boolean
@@ -188,13 +188,17 @@ watch(videoPercent, () => {
       offset: [0, 8],
       zIndex: 9999,
       popperOptions: {
-        modifiers: [{ name: 'flip', enabled: true }],
+        modifiers: [
+          { name: 'flip', enabled: true },
+          { name: 'preventOverflow', enabled: true, options: { padding: 8 } },
+        ],
       },
       appendTo: getAppendTo,
       getReferenceClientRect: getReferenceClientRect.value,
       plugins: [sticky],
       sticky: 'popper',
       maxWidth: 500,
+      onShow: triggerBubbleReposition,
     }"
   >
     <div

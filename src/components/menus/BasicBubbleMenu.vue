@@ -9,7 +9,7 @@ import type { BaseKitOptions } from '@/extensions/BaseKit'
 import type { BubbleTypeMenu } from './BasicBubble'
 import { useLocale } from '@/locales'
 import { useTiptapStore } from '@/hooks'
-import { getBubbleAppendTo } from './BasicBubble'
+import { getBubbleAppendTo, triggerBubbleReposition } from './BasicBubble'
 
 interface Props {
   editor: Editor
@@ -28,6 +28,13 @@ const tippyOptions = reactive<Record<string, unknown>>({
   zIndex: 9999,
   appendTo: () => getBubbleAppendTo(),
   moveTransition: 'transform 0.15s ease-out',
+  popperOptions: {
+    modifiers: [
+      { name: 'flip', enabled: true },
+      { name: 'preventOverflow', enabled: true, options: { padding: 8 } },
+    ],
+  },
+  onShow: triggerBubbleReposition,
 })
 
 const nodeType = computed(() => {

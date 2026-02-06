@@ -14,6 +14,7 @@ import Menu from '../ui/menu.vue'
 import { DOMSerializer } from 'prosemirror-model'
 import { useAIConversation } from '@/hooks/useAIConversation'
 import { DEFAULT_SHORTCUTS } from '@/extensions/AI/constants'
+import { triggerBubbleReposition } from './BasicBubble'
 import type { Props as TippyProps } from 'tippy.js'
 
 interface Props {
@@ -133,11 +134,18 @@ const tippyOptions = reactive<Partial<TippyProps>>({
   zIndex: 99,
   appendTo: 'parent',
   placement: 'bottom-start',
+  popperOptions: {
+    modifiers: [
+      { name: 'flip', enabled: true },
+      { name: 'preventOverflow', enabled: true, options: { padding: 8 } },
+    ],
+  },
   onShow(instance) {
     tippyInstance.value = instance
     bind()
     setTimeout(() => {
       focused.value = true
+      triggerBubbleReposition()
     }, 30)
   },
   onHide() {

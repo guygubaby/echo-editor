@@ -7,6 +7,8 @@ const props = withDefaults(defineProps<MenubarContentProps & { class?: HTMLAttri
   align: 'start',
   alignOffset: -4,
   sideOffset: 8,
+  avoidCollisions: true,
+  collisionPadding: 8,
 })
 
 const delegatedProps = computed(() => {

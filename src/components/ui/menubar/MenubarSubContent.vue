@@ -9,7 +9,10 @@ import {
 } from 'reka-ui'
 import { computed, type HTMLAttributes } from 'vue'
 
-const props = defineProps<MenubarSubContentProps & { class?: HTMLAttributes['class'] }>()
+const props = withDefaults(defineProps<MenubarSubContentProps & { class?: HTMLAttributes['class'] }>(), {
+  avoidCollisions: true,
+  collisionPadding: 8,
+})
 
 const emits = defineEmits<MenubarSubContentEmits>()
 

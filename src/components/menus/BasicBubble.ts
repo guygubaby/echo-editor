@@ -1,8 +1,8 @@
-import { deleteSelection } from '@tiptap/pm/commands'
 import type { Editor } from '@tiptap/vue-3'
 import ActionButton from '../ActionButton.vue'
 import { VIDEO_SIZE } from '@/constants'
 import type { ButtonViewParams, ButtonViewReturn, ExtensionNameKeys } from '@/type'
+import { nextTick } from 'vue'
 
 /** Represents the size types for bubble images or videos */
 type BubbleImageOrVideoSizeType = 'size-xx-small' | 'size-x-small' | 'size-small' | 'size-medium' | 'size-large'
@@ -192,4 +192,13 @@ export const getBubbleAppendTo = () => {
     document.body.appendChild(elem)
   }
   return elem
+}
+
+/**
+ * Emit a scroll event to trigger Popper.js repositioning.
+ * This helps prevent bubble menus from rendering outside the viewport on first show.
+ */
+export const triggerBubbleReposition = async () => {
+  await nextTick()
+  window.dispatchEvent(new Event('scroll'))
 }
