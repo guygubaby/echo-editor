@@ -234,15 +234,18 @@ defineExpose({ editor })
           :style="contentDynamicStyles"
           :spellcheck="state.spellCheck"
         />
+        <template v-if="!disabled && editor.isEditable">
+          <LinkBubbleMenu v-if="hasExtension(editor, 'link')" :editor="editor" />
+          <ImageBubbleMenu v-if="hasExtension(editor, 'image')" :editor="editor" />
+          <VideoBubbleMenu v-if="hasExtension(editor, 'video')" :editor="editor" />
+        </template>
+
         <template v-if="!hideBubble && !disabled && editor.isEditable">
           <ContentMenu :editor="editor" class="hidden sm:block" />
-          <LinkBubbleMenu v-if="hasExtension(editor, 'link')" :editor="editor" />
           <ColumnsBubbleMenu v-if="hasExtension(editor, 'columns')" :editor="editor" />
           <TableBubbleMenu v-if="hasExtension(editor, 'table')" :editor="editor" />
           <AIMenu v-if="hasExtension(editor, 'AI')" :editor="editor" />
           <CommentMenu v-if="hasExtension(editor, 'comment')" :editor="editor" />
-          <ImageBubbleMenu v-if="hasExtension(editor, 'image')" :editor="editor" />
-          <VideoBubbleMenu v-if="hasExtension(editor, 'video')" :editor="editor" />
           <BasicBubbleMenu :editor="editor" />
         </template>
       </div>
