@@ -201,4 +201,5 @@ export const getBubbleAppendTo = () => {
 export const triggerBubbleReposition = async () => {
   await nextTick()
   window.dispatchEvent(new Event('scroll'))
+  window.dispatchEvent(new Event('resize'))
 }
