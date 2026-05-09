@@ -8,6 +8,7 @@ import type { EditorOptions } from '@tiptap/vue-3'
 import { EDITOR_UPDATE_THROTTLE_WAIT_TIME } from '@/constants'
 import { differenceBy, getCssUnitWithDefault, hasExtension, isEqual, throttle } from '@/utils/utils'
 import { useLocale } from '@/locales'
+import { FocusWithoutScroll } from '@/extensions/FocusWithoutScroll'
 import { useTiptapStore } from '@/hooks'
 import { useTheme } from '@/hooks/useTheme'
 import BasicBubbleMenu from './menus/BasicBubbleMenu.vue'
@@ -91,7 +92,7 @@ const editorConfig = computed<Partial<EditorOptions>>(() => ({
     emit('update:modelValue', output)
     emit('change', { editor, output })
   }, EDITOR_UPDATE_THROTTLE_WAIT_TIME),
-  extensions: unref(sortExtensions),
+  extensions: [FocusWithoutScroll, ...unref(sortExtensions)],
   editable: !props.disabled,
 }))
 
