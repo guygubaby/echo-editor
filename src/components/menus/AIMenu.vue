@@ -14,7 +14,7 @@ import Menu from '../ui/menu.vue'
 import { DOMSerializer } from 'prosemirror-model'
 import { useAIConversation } from '@/hooks/useAIConversation'
 import { DEFAULT_SHORTCUTS } from '@/extensions/AI/constants'
-import { triggerBubbleReposition } from './BasicBubble'
+import { getBubbleAppendTo, triggerBubbleReposition } from './BasicBubble'
 import type { Props as TippyProps } from 'tippy.js'
 
 interface Props {
@@ -132,7 +132,7 @@ const { bind, unbind } = useHotkeys('esc', () => {
 const tippyOptions = reactive<Partial<TippyProps>>({
   maxWidth: 600,
   zIndex: 99,
-  appendTo: 'parent',
+  appendTo: () => getBubbleAppendTo(),
   placement: 'bottom-start',
   popperOptions: {
     modifiers: [

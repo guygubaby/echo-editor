@@ -10,6 +10,7 @@ import {
 } from 'reka-ui'
 import { computed, type HTMLAttributes } from 'vue'
 import { SelectScrollDownButton, SelectScrollUpButton } from '.'
+import { useEchoEditorPortalRoot } from '@/hooks/useEchoEditorPortalRoot'
 
 defineOptions({
   inheritAttrs: false,
@@ -29,10 +30,11 @@ const delegatedProps = computed(() => {
 })
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const portalTarget = useEchoEditorPortalRoot()
 </script>
 
 <template>
-  <SelectPortal to=".echo-editor">
+  <SelectPortal v-if="portalTarget" :to="portalTarget">
     <SelectContent
       v-bind="{ ...forwarded, ...$attrs }"
       :class="

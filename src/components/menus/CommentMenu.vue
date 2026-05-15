@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { useFocus } from '@vueuse/core'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { Icon } from '@/components/icons'
-import { triggerBubbleReposition } from './BasicBubble'
+import { getBubbleAppendTo, triggerBubbleReposition } from './BasicBubble'
 import type { Props as TippyProps } from 'tippy.js'
 import { reactive } from 'vue'
 
@@ -140,7 +140,7 @@ const { bind, unbind } = useHotkeys('esc', () => {
 const tippyOptions = reactive<Partial<TippyProps>>({
   maxWidth: 450,
   zIndex: 99,
-  appendTo: 'parent',
+  appendTo: () => getBubbleAppendTo(),
   placement: 'bottom-start',
   popperOptions: {
     modifiers: [
@@ -296,4 +296,3 @@ function onFormSubmit(e: Event) {
   }
 }
 </style>
-

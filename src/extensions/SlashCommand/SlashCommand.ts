@@ -8,6 +8,7 @@ import { renderGroups } from './groups'
 import MenuList from './CommandsList.vue'
 import type { Group } from './types'
 import { useLocale } from '@/locales'
+import { ensureEchoEditorPortalRoot } from '@/utils/portal'
 
 interface SlashCommandOptions {
   getCommandGroups?: (options: { editor: Editor; presetGroups: Group[]; lang: string }) => Group[]
@@ -26,6 +27,7 @@ export const SlashCommand = Extension.create<SlashCommandOptions>({
       theme: 'slash-command',
       maxWidth: '16rem',
       offset: [16, 8],
+      appendTo: () => ensureEchoEditorPortalRoot(),
       popperOptions: {
         strategy: 'fixed',
         modifiers: [
@@ -155,7 +157,7 @@ export const SlashCommand = Extension.create<SlashCommandOptions>({
 
               popup?.[0].setProps({
                 getReferenceClientRect,
-                appendTo: () => document.body,
+                appendTo: () => ensureEchoEditorPortalRoot(),
                 content: component.element,
               })
 

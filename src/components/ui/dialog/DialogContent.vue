@@ -11,6 +11,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import { computed, type HTMLAttributes } from 'vue'
+import { useEchoEditorPortalRoot } from '@/hooks/useEchoEditorPortalRoot'
 
 const props = defineProps<DialogContentProps & { class?: HTMLAttributes['class'] }>()
 const emits = defineEmits<DialogContentEmits>()
@@ -22,10 +23,11 @@ const delegatedProps = computed(() => {
 })
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const portalTarget = useEchoEditorPortalRoot()
 </script>
 
 <template>
-  <DialogPortal to=".echo-editor">
+  <DialogPortal v-if="portalTarget" :to="portalTarget">
     <DialogOverlay
       class="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
     />

@@ -8,6 +8,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import { computed, type HTMLAttributes } from 'vue'
+import { useEchoEditorPortalRoot } from '@/hooks/useEchoEditorPortalRoot'
 
 const props = withDefaults(defineProps<MenubarSubContentProps & { class?: HTMLAttributes['class'] }>(), {
   avoidCollisions: true,
@@ -23,10 +24,11 @@ const delegatedProps = computed(() => {
 })
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const portalTarget = useEchoEditorPortalRoot()
 </script>
 
 <template>
-  <MenubarPortal to=".echo-editor">
+  <MenubarPortal v-if="portalTarget" :to="portalTarget">
     <MenubarSubContent
       v-bind="forwarded"
       :class="

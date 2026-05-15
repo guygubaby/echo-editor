@@ -59,10 +59,25 @@ function toggleFontType(name: string) {
 </script>
 
 <template>
-  <ActionDropdownButton :disabled="disabled" :tooltip="tooltip" :title="activeFontFamily" btn_class="min-w-24 max-w-32">
+  <ActionDropdownButton
+    :disabled="disabled"
+    :tooltip="tooltip"
+    :title="activeFontFamily"
+    btn_class="min-w-24 max-w-32"
+    class="!w-64 max-w-[calc(100vw-1rem)] overflow-hidden"
+  >
     <template v-for="(item, index) in fontFamilyOptions" :key="index">
-      <MenuCheckboxItem :model-value="activeFontFamily === item" @click="toggleFontType(item)">
-        <span class="ml-1 h-full" :data-font="item" :style="{ fontFamily: item ?? undefined }">
+      <MenuCheckboxItem
+        :model-value="activeFontFamily === item"
+        class="w-full min-w-0"
+        @click="toggleFontType(item)"
+      >
+        <span
+          class="ml-1 block h-full min-w-0 truncate"
+          :data-font="item"
+          :style="{ fontFamily: item ?? undefined }"
+          :title="item"
+        >
           {{ item }}
         </span>
       </MenuCheckboxItem>

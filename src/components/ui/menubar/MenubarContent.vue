@@ -2,6 +2,7 @@
 import { cn } from '@/lib/utils'
 import { MenubarContent, type MenubarContentProps, MenubarPortal, useForwardProps } from 'reka-ui'
 import { computed, type HTMLAttributes } from 'vue'
+import { useEchoEditorPortalRoot } from '@/hooks/useEchoEditorPortalRoot'
 
 const props = withDefaults(defineProps<MenubarContentProps & { class?: HTMLAttributes['class'] }>(), {
   align: 'start',
@@ -18,10 +19,11 @@ const delegatedProps = computed(() => {
 })
 
 const forwardedProps = useForwardProps(delegatedProps)
+const portalTarget = useEchoEditorPortalRoot()
 </script>
 
 <template>
-  <MenubarPortal to=".echo-editor">
+  <MenubarPortal v-if="portalTarget" :to="portalTarget">
     <MenubarContent
       v-bind="forwardedProps"
       :class="

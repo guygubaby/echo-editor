@@ -3,6 +3,7 @@ import ActionButton from '../ActionButton.vue'
 import { VIDEO_SIZE } from '@/constants'
 import type { ButtonViewParams, ButtonViewReturn, ExtensionNameKeys } from '@/type'
 import { nextTick } from 'vue'
+import { ensureEchoEditorPortalRoot } from '@/utils/portal'
 
 /** Represents the size types for bubble images or videos */
 type BubbleImageOrVideoSizeType = 'size-xx-small' | 'size-x-small' | 'size-small' | 'size-medium' | 'size-large'
@@ -183,15 +184,8 @@ export const generateBubbleTypeMenu = <T = any>(
   return items
 }
 
-let elem: HTMLDivElement | null = null
-
 export const getBubbleAppendTo = () => {
-  if (!elem) {
-    elem = document.createElement('div')
-    elem.classList.add('echo-editor')
-    document.body.appendChild(elem)
-  }
-  return elem
+  return ensureEchoEditorPortalRoot()
 }
 
 /**

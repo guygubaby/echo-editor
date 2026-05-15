@@ -8,6 +8,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import { computed, type HTMLAttributes } from 'vue'
+import { useEchoEditorPortalRoot } from '@/hooks/useEchoEditorPortalRoot'
 
 defineOptions({
   inheritAttrs: false,
@@ -28,10 +29,11 @@ const delegatedProps = computed(() => {
 })
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const portalTarget = useEchoEditorPortalRoot()
 </script>
 
 <template>
-  <PopoverPortal to=".echo-editor">
+  <PopoverPortal v-if="portalTarget" :to="portalTarget">
     <PopoverContent
       v-bind="{ ...forwarded, ...$attrs }"
       :class="

@@ -23,6 +23,7 @@ import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/comp
 import { IndentProps, setNodeIndentMarkup } from '@/utils/indent'
 import { getShortcutKeys } from '@/utils/plateform'
 import { hasExtension } from '@/utils/utils'
+import { useEchoEditorPortalRoot } from '@/hooks/useEchoEditorPortalRoot'
 
 type PluginRefType = Plugin<{
   locked: boolean
@@ -47,6 +48,7 @@ const pluginRef = ref<PluginRefType | null>(null)
 const currentNode = ref<Node | null>(null)
 const currentNodePos = ref<number>(-1)
 const menuOpen = ref(false)
+const portalTarget = useEchoEditorPortalRoot()
 
 onMounted(() => {
   if (dragElement.value && !props.editor.isDestroyed) {
@@ -234,7 +236,7 @@ watch(
               <Icon name="AlignCenter" />
               <span>{{ t('editor.textalign.tooltip') }}</span>
             </DropdownMenuSubTrigger>
-            <DropdownMenuPortal to=".echo-editor">
+            <DropdownMenuPortal v-if="portalTarget" :to="portalTarget">
               <DropdownMenuSubContent>
                 <DropdownMenuCheckboxItem
                   :model-value="editor.isActive({ textAlign: 'left' }) ?? false"
@@ -272,7 +274,7 @@ watch(
               <Icon name="IndentIncrease" />
               <span>{{ t('editor.indent') }}</span>
             </DropdownMenuSubTrigger>
-            <DropdownMenuPortal to=".echo-editor">
+            <DropdownMenuPortal v-if="portalTarget" :to="portalTarget">
               <DropdownMenuSubContent>
                 <DropdownMenuItem
                   class="flex gap-3"

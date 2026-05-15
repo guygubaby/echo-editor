@@ -108,6 +108,9 @@ export { FontFamily } from './FontFamily'
 
 export type { FontFamilyOptions } from './FontFamily'
 
+export { PasteFontFamily, createPasteFontFamilyExtension } from './PasteFontFamily'
+export type { PasteFontFamilyOptions } from './PasteFontFamily'
+
 export { FontWeight } from './FontWeight'
 
 export type { FontWeightOptions } from './FontWeight'
