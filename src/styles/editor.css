@@ -11,6 +11,10 @@
   .tiptap {
     @apply caret-black dark:caret-white outline-0 px-4 py-2 sm:px-20 sm:py-6;
     min-height: 180px;
+    &.echo-format-painter-active,
+    &.echo-format-painter-active * {
+      cursor: var(--echo-format-painter-cursor, copy) !important;
+    }
     .img-placeholder {
       width: fit-content;
       position: relative;
