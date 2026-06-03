@@ -24,8 +24,8 @@ function onEdit() {
 </script>
 
 <template>
-  <div class="flex items-center gap-2 p-2 pl-4 bg-card rounded-lg shadow-sm border">
-    <a :href="link" target="_blank" rel="noopener noreferrer" class="text-sm underline break-all">
+  <div class="flex w-fit max-w-[calc(100vw-2rem)] items-center gap-2 p-2 pl-4 bg-card rounded-lg shadow-sm border">
+    <a :href="link" target="_blank" rel="noopener noreferrer" class="block max-w-64 truncate text-sm underline sm:max-w-96">
       {{
         truncate(link, {
           length: 50,
@@ -33,8 +33,8 @@ function onEdit() {
         })
       }}
     </a>
-    <Separator orientation="vertical" class="h-4" v-if="link" />
-    <div class="flex flex-nowrap">
+    <Separator orientation="vertical" class="h-4 shrink-0" v-if="link" />
+    <div class="flex shrink-0 flex-nowrap">
       <ActionButton
         icon="Pencil"
         :tooltip="t('editor.link.edit.tooltip')"
