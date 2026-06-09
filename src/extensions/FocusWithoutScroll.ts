@@ -82,16 +82,11 @@ export const FocusWithoutScroll = Extension.create({
   addCommands() {
     return {
       focus:
-        ((position: FocusPosition = null, options: FocusOptions = {}) =>
+        ((position: FocusPosition = null, _options: FocusOptions = {}) =>
           ({ editor, view, tr, dispatch }) => {
-            const focusOptions = {
-              scrollIntoView: false,
-              ...options,
-            }
-
             const delayedFocus = () => {
               const element = view.dom as HTMLElement
-              const scrollPositions = focusOptions.scrollIntoView ? [] : collectScrollPositions(element)
+              const scrollPositions = collectScrollPositions(element)
 
               if (isiOS() || isAndroid()) {
                 element.focus()
@@ -100,13 +95,8 @@ export const FocusWithoutScroll = Extension.create({
               requestAnimationFrame(() => {
                 if (!editor.isDestroyed) {
                   view.focus()
-
-                  if (focusOptions.scrollIntoView) {
-                    editor.commands.scrollIntoView()
-                  } else {
-                    restoreScrollPositions(scrollPositions)
-                    requestAnimationFrame(() => restoreScrollPositions(scrollPositions))
-                  }
+                  restoreScrollPositions(scrollPositions)
+                  requestAnimationFrame(() => restoreScrollPositions(scrollPositions))
                 }
               })
             }
