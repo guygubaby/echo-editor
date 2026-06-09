@@ -51,8 +51,6 @@ const goToSelection = () => {
   if (!position) return
   //@ts-ignore
   props.editor.commands.setTextSelection(position)
-  const { node } = props.editor.view.domAtPos(props.editor.state.selection.anchor)
-  node instanceof HTMLElement && node.scrollIntoView({ behavior: 'smooth', block: 'center' })
 }
 
 watch(

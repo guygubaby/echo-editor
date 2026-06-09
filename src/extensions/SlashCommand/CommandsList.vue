@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch, nextTick } from 'vue'
+import { ref } from 'vue'
 import { Icon } from '@/components/icons'
 import type { MenuListProps } from './types'
 import { useLocale } from '@/locales'
@@ -7,32 +7,15 @@ import { useLocale } from '@/locales'
 // 选中的索引
 const selectedCommandIndex = ref(0)
 const selectedGroupIndex = ref(0)
-// 滚动ref
-const scrollContainer = ref<HTMLDivElement | null>(null)
 
 const { t } = useLocale()
 
-const activeItemRefs = ref<(HTMLButtonElement | null)[]>([])
 const props = withDefaults(defineProps<MenuListProps>(), {
   items: undefined,
   command: undefined,
 })
 
 defineExpose({ onKeyDown })
-
-watch([() => selectedCommandIndex.value, () => selectedGroupIndex.value], async () => {
-  if (!scrollContainer.value) return
-  await nextTick() // 等待 DOM 更新完成
-  const activeItemIndex = selectedGroupIndex.value * 1000 + selectedCommandIndex.value
-  // 取当前选中的dom元素
-  const activeItem = activeItemRefs.value[activeItemIndex]
-  if (activeItem) {
-    activeItem.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-    })
-  }
-})
 
 function onKeyDown({ event }) {
   if (event.key === 'ArrowUp') {
@@ -109,15 +92,9 @@ function selectItem(groupIndex: number, commandIndex: number) {
 function createCommandClickHandler(groupIndex: number, commandIndex: number) {
   selectItem(groupIndex, commandIndex)
 }
-function setActiveItemRef(groupIndex: number, commandIndex: number, el: any) {
-  activeItemRefs.value[groupIndex * 1000 + commandIndex] = el
-}
 </script>
 <template>
-  <div
-    class="rounded-lg bg-background shadow-sm border max-h-[min(80vh,24rem)] overflow-auto flex-wrap mb-8 p-1"
-    ref="scrollContainer"
-  >
+  <div class="rounded-lg bg-background shadow-sm border max-h-[min(80vh,24rem)] overflow-auto flex-wrap mb-8 p-1">
     <div class="grid grid-cols-1 gap-0.5 min-w-48" v-if="items?.length">
       <template v-for="(group, groupIndex) in items" :key="group.title">
         <div
@@ -132,7 +109,6 @@ function setActiveItemRef(groupIndex: number, commandIndex: number, el: any) {
               ? 'bg-accent text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200'
               : 'hover:bg-accent hover:text-neutral-800 dark:hover:bg-neutral-900 dark:hover:text-neutral-200',
           ]"
-          :ref="el => setActiveItemRef(groupIndex, commandIndex, el)"
           v-for="(command, commandIndex) in group.commands"
           :key="commandIndex"
           @click="createCommandClickHandler(groupIndex, commandIndex)"

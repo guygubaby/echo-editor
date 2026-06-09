@@ -41,7 +41,7 @@ function updateImageSize(event?: Event) {
   if (imageAttrs.src) {
     props.editor
       .chain()
-      .focus(undefined, { scrollIntoView: false })
+      .focus()
       .updateImage({
         width: width.value ? `${width.value}px` : null,
       })
@@ -53,7 +53,7 @@ function changeImagePercent(event?: any) {
   const percent = Math.max(0, Math.min(100, parseInt(imagePercent.value)))
   props.editor
     .chain()
-    .focus(undefined, { scrollIntoView: false })
+    .focus()
     .updateImage({ width: `${percent}%` })
     .run()
 }
@@ -107,7 +107,7 @@ function handleFlipX() {
   const { flipX } = image
   props.editor
     .chain()
-    .focus(undefined, { scrollIntoView: false })
+    .focus()
     .updateImage({
       flipX: !flipX,
     })
@@ -118,7 +118,7 @@ function handleFlipY() {
   const { flipY } = image
   props.editor
     .chain()
-    .focus(undefined, { scrollIntoView: false })
+    .focus()
     .updateImage({
       flipY: !flipY,
     })
@@ -128,7 +128,7 @@ function handleFlipY() {
 function handleBorderRadiusChange() {
   props.editor
     .chain()
-    .focus(undefined, { scrollIntoView: false })
+    .focus()
     .updateImage({
       borderRadius: borderRadius.value || null,
     })

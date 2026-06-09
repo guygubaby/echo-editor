@@ -104,7 +104,7 @@ export const Image = TiptapImage.extend({
     }
   },
   renderHTML({ node, HTMLAttributes }) {
-    const { textAlign, flipX, flipY, borderRadius } = node.attrs
+    const { textAlign, flipX, flipY, borderRadius, originWidth, originHeight } = node.attrs
     const textAlignStyle =
       {
         left: 'margin-right: auto;',
@@ -114,7 +114,9 @@ export const Image = TiptapImage.extend({
     const transformStyle =
       flipX || flipY ? `transform: rotateX(${flipX ? '180' : '0'}deg) rotateY(${flipY ? '180' : '0'}deg);` : ''
     const borderRadiusStyle = borderRadius ? `border-radius: ${borderRadius};` : ''
-    const style = `${textAlignStyle} ${transformStyle} ${borderRadiusStyle}`
+    const aspectRatioStyle =
+      Number(originWidth) > 0 && Number(originHeight) > 0 ? `aspect-ratio: ${originWidth} / ${originHeight};` : ''
+    const style = `${textAlignStyle} ${transformStyle} ${borderRadiusStyle} ${aspectRatioStyle}`
     return [
       'img',
       mergeAttributes(

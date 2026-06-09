@@ -88,7 +88,7 @@ function updateVideoSize(event?: Event) {
   event?.preventDefault()
   props.editor
     .chain()
-    .focus(undefined, { scrollIntoView: false })
+    .focus()
     .updateVideo({
       width: videoWidth.value ? `${videoWidth.value}px` : null,
     })
@@ -100,7 +100,7 @@ function changeVideoPercent(event?: Event) {
   const percent = Math.max(0, Math.min(100, parseInt(videoPercent.value)))
   props.editor
     .chain()
-    .focus(undefined, { scrollIntoView: false })
+    .focus()
     .updateVideo({ width: `${percent}%` })
     .run()
 }

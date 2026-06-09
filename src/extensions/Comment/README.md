@@ -156,12 +156,9 @@ function deleteComment(commentId: string) {
   }
 }
 
-// 滚动到评论
-function scrollToComment(commentId: string) {
-  const commentElement = document.querySelector(`[data-comment-id="${commentId}"]`)
-  if (commentElement) {
-    commentElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
-  }
+// 定位评论元素
+function findCommentElement(commentId: string) {
+  return document.querySelector(`[data-comment-id="${commentId}"]`)
 }
 </script>
 
@@ -597,4 +594,3 @@ const plainText = editor.getText()
 ## 🤝 贡献
 
 欢迎提交 Issue 和 Pull Request！
-

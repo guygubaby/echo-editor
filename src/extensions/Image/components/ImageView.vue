@@ -37,18 +37,22 @@ const resizerState = ref<{ x: number; y: number; w: number; h: number; dir: stri
 })
 
 const imgAttrs = computed(() => {
-  const { src, alt, width, height, flipX, flipY, borderRadius } = props.node.attrs
+  const { src, alt, width, height, originWidth, originHeight, flipX, flipY, borderRadius } = props.node.attrs
   const transformStyles: any = []
   if (flipX) transformStyles.push('rotateX(180deg)')
   if (flipY) transformStyles.push('rotateY(180deg)')
   const transform = transformStyles.join(' ')
+  const hasOriginSize = Number(originWidth) > 0 && Number(originHeight) > 0
 
   return {
     src: src || undefined,
     alt: alt || undefined,
+    width: hasOriginSize ? Number(originWidth) : undefined,
+    height: hasOriginSize ? Number(originHeight) : undefined,
     style: {
       width: isNumber(width) ? `${width}px` : width,
       height: isNumber(height) ? `${height}px` : height,
+      aspectRatio: hasOriginSize ? `${Number(originWidth)} / ${Number(originHeight)}` : undefined,
       transform: transform || 'none',
       borderRadius: borderRadius || undefined,
     },
@@ -64,8 +68,15 @@ const imageRef = ref<HTMLElement | null>(null)
 const resizeObserver = new ResizeObserver(entries => {
   for (const entry of entries) {
     const { width, height } = entry.contentRect
-    originalSize.value = { width, height }
-    props.updateAttributes({ originWidth: width, originHeight: height })
+    const nextWidth = Math.round(width)
+    const nextHeight = Math.round(height)
+    if (!nextWidth || !nextHeight) continue
+
+    originalSize.value = { width: nextWidth, height: nextHeight }
+
+    if (Number(props.node.attrs.originWidth) !== nextWidth || Number(props.node.attrs.originHeight) !== nextHeight) {
+      props.updateAttributes({ originWidth: nextWidth, originHeight: nextHeight })
+    }
   }
 })
 
@@ -171,6 +182,8 @@ onBeforeUnmount(() => {
         <img
           :src="imgAttrs.src"
           :alt="imgAttrs.alt"
+          :width="imgAttrs.width"
+          :height="imgAttrs.height"
           ref="imageRef"
           class="image-view__body__image block w-full object-cover"
           :style="{

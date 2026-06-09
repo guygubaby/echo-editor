@@ -67,9 +67,8 @@ export const SlashCommand = Extension.create<SlashCommandOptions>({
           )
         },
         command: ({ editor, range, props }: { editor: Editor; range: Range; props: any }) => {
-          const { view } = editor
           props.action({ editor, range })
-          view.focus()
+          editor.commands.focus()
         },
         items: ({ query, editor }: { query: string; editor: Editor }) => {
           const { lang } = useLocale()
