@@ -6,6 +6,13 @@ interface FocusOptions {
   scrollIntoView?: boolean
 }
 
+interface ScrollPositionSnapshot {
+  element: Element | Window
+  isWindow: boolean
+  left: number
+  top: number
+}
+
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     focus: {
@@ -15,6 +22,58 @@ declare module '@tiptap/core' {
 }
 
 const isAndroid = () => typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
+
+const isScrollable = (element: Element) => {
+  return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth
+}
+
+const collectScrollPositions = (element: HTMLElement): ScrollPositionSnapshot[] => {
+  const positions: ScrollPositionSnapshot[] = []
+  const doc = element.ownerDocument
+  const scrollingElement = doc.scrollingElement
+
+  for (let node: HTMLElement | null = element; node; node = node.parentElement) {
+    if (isScrollable(node)) {
+      positions.push({
+        element: node,
+        isWindow: false,
+        left: node.scrollLeft,
+        top: node.scrollTop,
+      })
+    }
+  }
+
+  if (scrollingElement) {
+    positions.push({
+      element: scrollingElement,
+      isWindow: false,
+      left: scrollingElement.scrollLeft,
+      top: scrollingElement.scrollTop,
+    })
+  }
+
+  positions.push({
+    element: doc.defaultView ?? window,
+    isWindow: true,
+    left: doc.defaultView?.scrollX ?? window.scrollX,
+    top: doc.defaultView?.scrollY ?? window.scrollY,
+  })
+
+  return positions
+}
+
+const restoreScrollPositions = (positions: ScrollPositionSnapshot[]) => {
+  positions.forEach(({ element, isWindow, left, top }) => {
+    if (isWindow) {
+      element.scrollTo(left, top)
+      return
+    }
+
+    const scrollElement = element as Element
+    scrollElement.scrollLeft = left
+    scrollElement.scrollTop = top
+  })
+}
 
 export const FocusWithoutScroll = Extension.create({
   name: 'focusWithoutScroll',
@@ -31,8 +90,10 @@ export const FocusWithoutScroll = Extension.create({
             }
 
             const delayedFocus = () => {
+              const element = view.dom as HTMLElement
+              const scrollPositions = focusOptions.scrollIntoView ? [] : collectScrollPositions(element)
+
               if (isiOS() || isAndroid()) {
-                const element = view.dom as HTMLElement
                 element.focus()
               }
 
@@ -42,6 +103,9 @@ export const FocusWithoutScroll = Extension.create({
 
                   if (focusOptions.scrollIntoView) {
                     editor.commands.scrollIntoView()
+                  } else {
+                    restoreScrollPositions(scrollPositions)
+                    requestAnimationFrame(() => restoreScrollPositions(scrollPositions))
                   }
                 }
               })
